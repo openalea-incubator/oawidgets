@@ -1,63 +1,66 @@
 {
   "_pkglts": {
-    "auto_install": true,
-    "install_front_end": "stdout",
-    "use_prompts": false,
+    "auto_install": true, 
+    "install_front_end": "stdout", 
+    "use_prompts": false, 
     "version": 12
-  },
+  }, 
   "base": {
     "authors": [
       [
-        "Baptiste Brument",
+        "Baptiste Brument", 
         "bbrument@gmail.com"
-      ],
+      ], 
       [
-        "Christophe Pradal",
+        "Christophe Pradal", 
         "christophe.pradal@cirad.fr"
       ]
-    ],
-    "namespace": null,
-    "namespace_method": "pkg_util",
-    "pkgname": "oawidgets",
+    ], 
+    "namespace": null, 
+    "namespace_method": "pkg_util", 
+    "pkgname": "oawidgets", 
     "url": null
-  },
+  }, 
   "doc": {
-    "description": "OpenAlea Widgets for IPython Kernel",
-    "fmt": "rst",
+    "description": "OpenAlea Widgets for IPython Kernel", 
+    "fmt": "rst", 
     "keywords": []
-  },
-  "git": {},
+  }, 
+  "git": {}, 
   "github": {
-    "owner": "openalea-incubator",
-    "project": "{{ base.pkgname }}",
+    "owner": "openalea-incubator", 
+    "project": "{{ base.pkgname }}", 
     "url": "https://github.com/{{ github.owner }}/{{ github.project }}"
-  },
+  }, 
   "license": {
-    "name": "cecill-c",
-    "organization": "organization",
-    "project": "{{ base.pkgname }}",
+    "name": "cecill-c", 
+    "organization": "organization", 
+    "project": "{{ base.pkgname }}", 
     "year": 2019
-  },
+  }, 
+  "notebook": {
+    "src_directory": "example"
+  }, 
   "pysetup": {
     "intended_versions": [
       "27"
-    ],
+    ], 
     "require": []
-  },
+  }, 
   "readthedocs": {
     "project": "{{ github.project }}"
-  },
+  }, 
   "sphinx": {
-    "autodoc_dvlpt": true,
-    "build_dir": "build/sphinx",
+    "autodoc_dvlpt": true, 
+    "build_dir": "build/sphinx", 
     "theme": "default"
-  },
+  }, 
   "test": {
     "suite_name": "pytest"
-  },
+  }, 
   "version": {
-    "major": 0,
-    "minor": 0,
+    "major": 0, 
+    "minor": 0, 
     "post": 1
   }
 }
