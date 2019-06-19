@@ -4,5 +4,5 @@ Test
 
 .. toctree::
    
-   ../example/sphere.ipynb
-   ../example/plantframe.ipynb
+   ../example/sphere
+   ../example/plantframe
