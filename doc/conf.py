@@ -1,3 +1,5 @@
+nbsphinx_execute = 'never'
+
 # {# pkglts, sphinx
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
