@@ -1,0 +1,13 @@
+name: oawidgets
+channels:
+  - openalea
+  - defaults
+  - conda-forge
+dependencies:
+  - python=2.7
+  - mpfr<4
+  - openalea.sconsx
+  - openalea.misc
+  - openalea.plantgl
+  - nbsphinx
+  - k3d
