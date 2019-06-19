@@ -5,16 +5,16 @@ channels:
   - conda-forge
 dependencies:
   - python=2.7
-#  - mpfr<4
-#  - openalea.sconsx
-#  - openalea.misc
-#  - openalea.plantgl
-#  - boost=1.66
+  - mpfr<4
+  - openalea.sconsx
+  - openalea.misc
+  - openalea.plantgl
+  - boost=1.66
   - nbsphinx
   - sphinx>=1.6
   - k3d
   - ipython
-#  - openalea.mtg
+  - openalea.mtg
   - ipykernel
   - pandoc
   - nbconvert!=5.4
