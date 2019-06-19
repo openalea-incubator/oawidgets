@@ -10,4 +10,10 @@ dependencies:
   - openalea.misc
   - openalea.plantgl
   - nbsphinx
+  - sphinx>=1.6
   - k3d
+  - ipython
+  - openalea.mtg
+  - ipykernel
+  - pandoc
+  - nbconvert!=5.4
