@@ -87,7 +87,10 @@ class LpyMagics(Magics):
 
 
     def _plot3d(self, scene, format='png'):
-        """ TODO: Replace by the k3d plantgl connection. """
+        """
+        Baptise
+        TODO: Replace by the k3d plantgl connection.
+        """
         fn = tempfile.mktemp(suffix='.'+format)
         Viewer.frameGL.setBgColor(255,255,255)
         #Viewer.animation(True)
@@ -535,5 +538,9 @@ __doc__ = __doc__.format(
 
 
 def load_ipython_extension(ip):
-    """Load the extension in IPython."""
+    """
+    Any module file that define a function named `load_ipython_extension`
+    can be loaded via `%load_ext oawidgets.lpymagic` or be configured to be
+    autoloaded by IPython at startup time.
+    """
     ip.register_magics(LpyMagics)
