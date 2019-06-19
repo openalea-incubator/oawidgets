@@ -1,8 +1,9 @@
 ==========
-Test
+Gallery
 ==========
 
 .. toctree::
-   
-   ../example/sphere
-   ../example/plantframe
+   :glob:
+
+   notebook/sphere
+   notebook/plantframe
