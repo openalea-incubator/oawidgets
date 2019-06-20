@@ -10,7 +10,8 @@ dependencies:
   - openalea.misc
   - openalea.plantgl
   - boost=1.66
-  - nbsphinx
+  - pip :
+    - nbsphinx
   - sphinx>=1.6
   - k3d
   - ipython
