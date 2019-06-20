@@ -6,4 +6,4 @@ Gallery
    :glob:
 
    notebook/sphere
-   notebook/plantframe
+   
