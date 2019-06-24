@@ -1,4 +1,4 @@
-nbsphinx_execute = 'never'
+#nbsphinx_execute = 'never'
 
 # {# pkglts, sphinx
 #!/usr/bin/env python
@@ -55,8 +55,8 @@ extensions = [
     'sphinx.ext.mathjax',
     'sphinx.ext.napoleon',
     'sphinx.ext.todo',
-    'sphinx.ext.viewcode',
-    'nbsphinx'
+    'sphinx.ext.viewcode'
+#    'nbsphinx'
 ]
 
 #sphinx_gallery_conf = {
