@@ -5,5 +5,4 @@ Gallery
 .. toctree::
    :glob:
 
-   notebook/sphere
-   notebook/plantframe
+   notebook/lorenz_attractor   
