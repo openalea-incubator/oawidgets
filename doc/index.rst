@@ -6,4 +6,4 @@ Gallery
    :glob:
 
    notebook/lorenz_attractor
-   notebook/sphere
+   notebook/sphere.rst
