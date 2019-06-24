@@ -59,6 +59,11 @@ extensions = [
     'nbsphinx'
 ]
 
+#sphinx_gallery_conf = {
+#     'examples_dirs': '../example',    # path to your example scripts
+#     'gallery_dirs': 'auto_examples',  # path where to save gallery generated examples
+#}
+
 # try to add more extensions which are not default
 # but still useful
 # based on the fact that the extension is installed on the system

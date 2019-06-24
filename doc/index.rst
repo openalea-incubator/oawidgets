@@ -2,8 +2,14 @@
 Gallery
 ==========
 
-.. toctree::
-   :glob:
+.. figure:: ./images/sphere.png
+   :width: 30%
+   :target: https://nbviewer.jupyter.org/github/openalea-incubator/oawidgets/blob/doc/doc/notebook/sphere.ipynb
+  
+   3D-Visualisation of a sphere with K3D
 
-   notebook/lorenz_attractor
-   notebook/sphere.rst
+.. figure:: ./images/plantframe.png
+   :width: 30%
+   :target: https://nbviewer.jupyter.org/github/openalea-incubator/oawidgets/blob/doc/doc/notebook/plantframe.ipynb
+ 
+   PlantFrame with K3D
