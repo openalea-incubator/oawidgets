@@ -19,3 +19,4 @@ dependencies:
   - ipykernel
   - pandoc
   - nbconvert!=5.4
+  - pip
