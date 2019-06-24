@@ -1,4 +1,4 @@
-# nbsphinx_execute = 'never'
+nbsphinx_execute = 'never'
 
 # {# pkglts, sphinx
 #!/usr/bin/env python

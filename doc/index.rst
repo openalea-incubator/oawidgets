@@ -5,4 +5,6 @@ Gallery
 .. toctree::
    :glob:
 
-   notebook/lorenz_attractor   
+   notebook/sph   
+   notebook/plantf  
+   
