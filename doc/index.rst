@@ -4,12 +4,12 @@ Gallery
 
 .. figure:: ./images/sphere.png
    :width: 30%
-   :target: https://nbviewer.jupyter.org/github/openalea-incubator/oawidgets/blob/doc/doc/notebook/sphere.ipynb
+   :target: https://nbviewer.jupyter.org/github/openalea-incubator/oawidgets/blob/doc/example/sphere.ipynb
   
-   3D-Visualisation of a Sphere with K3D
+   3D-Visualisation of a Sphere
 
 .. figure:: ./images/plantframe.png
    :width: 30%
-   :target: https://nbviewer.jupyter.org/github/openalea-incubator/oawidgets/blob/doc/doc/notebook/plantframe.ipynb
+   :target: https://nbviewer.jupyter.org/github/openalea-incubator/oawidgets/blob/doc/example/plantframe.ipynb
  
-   PlantFrame with K3D
+   PlantFrame

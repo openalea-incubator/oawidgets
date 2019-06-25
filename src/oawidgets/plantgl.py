@@ -23,6 +23,7 @@ def PlantGL(pglobject, plot=None):
         plot += mesh
     elif isinstance(pglobject, Shape):
         mesh = tomesh(pglobject.geometry)
+        mesh.color = pglobject.appearance.ambient.toUint()
         plot += mesh
     elif isinstance(pglobject, Scene):
         for sh in pglobject:
