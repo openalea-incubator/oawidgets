@@ -170,15 +170,9 @@ class LpyMagics(Magics):
         help='Name of scene variable to be pulled from LPy after executing cell.'
         )
     @argument(
-        '-g', '--mtg', action='append',
-        help='Name of MTG variable to be pulled from LPy after executing cell.'
-        )
-
-    @argument(
         '-n', '--nbstep', action='append',
         help='Number of steps to be run by LPy..'
         )
-
     @argument(
         '-f', '--format', action='store',
         help='Plot format (png, svg or jpg).'
