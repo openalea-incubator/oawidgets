@@ -28,3 +28,19 @@ def PlantGL(pglobject, plot=None):
         for sh in pglobject:
             PlantGL(sh,plot)
     return plot
+
+def PlantGLscene(scene, plot=None):
+    if plot is None:
+        plot = k3d.plot()
+
+    for obj in scene:
+        if isinstance(obj, Geometry):
+            mesh = tomesh(obj)
+            plot += mesh
+        elif isinstance(obj, Shape):
+            mesh = tomesh(obj.geometry)
+            mesh.color = obj.appearance.ambient.toUint()
+            plot += mesh
+        else:
+            pass
+    return plot
