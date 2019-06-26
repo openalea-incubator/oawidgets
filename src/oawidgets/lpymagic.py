@@ -47,6 +47,8 @@ from openalea.plantgl.all import Viewer
 from openalea.mtg import MTG
 from openalea.mtg.io import mtg2lpy, lpy2mtg
 
+from oawidgets import plantgl
+
 from xml.dom import minidom
 
 
@@ -99,7 +101,6 @@ class LpyMagics(Magics):
         # img = open(fn, 'rb').read()
         # os.unlink(fn)
         # return img
-        from oawidgets import plantgl
         data = plantgl.PlantGL(scene)
         display(data)
         return None
