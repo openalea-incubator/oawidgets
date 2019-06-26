@@ -88,18 +88,21 @@ class LpyMagics(Magics):
 
     def _plot3d(self, scene, format='png'):
         """
-        Baptise
+        Baptiste
         TODO: Replace by the k3d plantgl connection.
         """
-        fn = tempfile.mktemp(suffix='.'+format)
-        Viewer.frameGL.setBgColor(255,255,255)
-        #Viewer.animation(True)
-        Viewer.display(scene)
-        Viewer.saveSnapshot(fn, format)
-        img = open(fn, 'rb').read()
-        os.unlink(fn)
-        return img
-
+        # fn = tempfile.mktemp(suffix='.'+format)
+        # Viewer.frameGL.setBgColor(255,255,255)
+        # #Viewer.animation(True)
+        # Viewer.display(scene)
+        # Viewer.saveSnapshot(fn, format)
+        # img = open(fn, 'rb').read()
+        # os.unlink(fn)
+        # return img
+        from oawidgets import plantgl
+        data = plantgl.PlantGL(scene)
+        display(data)
+        return None
 
     @skip_doctest
     @line_magic
@@ -345,21 +348,21 @@ class LpyMagics(Magics):
         """
         # Publish images
         image = self._plot3d(scene, format=plot_format)
+        if image is not None:
+        	plot_mime_type = _mimetypes.get(plot_format, 'image/png')
+        	#width, height = [int(s) for s in size.split(',')]
+        	#for image in images:
+        	display_data[plot_mime_type]= image
 
-        plot_mime_type = _mimetypes.get(plot_format, 'image/png')
-        #width, height = [int(s) for s in size.split(',')]
-        #for image in images:
-        display_data[plot_mime_type]= image
-
-        """
-        if args.output:
-            for output in ','.join(args.output).split(','):
-                output = unicode_to_str(output)
-                self.shell.push({output: self._oct.get(output)})
-        """
-        #for source, data in display_data:
-        #    self._publish_display_data(source, data)
-        self._publish_display_data(data=display_data)
+	        """
+	        if args.output:
+	            for output in ','.join(args.output).split(','):
+	                output = unicode_to_str(output)
+	                self.shell.push({output: self._oct.get(output)})
+	        """
+	        #for source, data in display_data:
+	        #    self._publish_display_data(source, data)
+	        self._publish_display_data(data=display_data)
 
         if return_output:
             return tree if not mtg else mtg

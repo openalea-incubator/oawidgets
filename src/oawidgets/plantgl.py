@@ -16,7 +16,6 @@ def PlantGL(pglobject, plot=None):
     """Return a k3d plot from PlantGL shape, geometry and scene objects"""
     if plot is None:
         plot = k3d.plot()
-    d = Discretizer()
 
     if isinstance(pglobject, Geometry):
         mesh = tomesh(pglobject)
@@ -27,6 +26,5 @@ def PlantGL(pglobject, plot=None):
         plot += mesh
     elif isinstance(pglobject, Scene):
         for sh in pglobject:
-            mesh = tomesh(sh.geometry)
-            plot+= mesh
+            PlantGL(sh,plot)
     return plot
