@@ -101,7 +101,7 @@ class LpyMagics(Magics):
         # img = open(fn, 'rb').read()
         # os.unlink(fn)
         # return img
-        data = plantgl.PlantGL(scene)
+        data = plantgl.PlantGLscene(scene)
         display(data)
         return None
 
