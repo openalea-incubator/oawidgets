@@ -22,27 +22,39 @@ def scene2mesh(scene):
     count=-1
     offset=0
     for obj in scene:
-	obj.geometry.apply(d)
-	idl = np.array([tuple(index) for index in list(d.discretization.indexList)])+offset
-    	pts = [(pt.x, pt.y, pt.z) for pt in list(d.discretization.pointList)]
+        obj.geometry.apply(d)
+        idl = np.array([tuple(index) for index in list(d.discretization.indexList)])+offset
+        pts = [(pt.x, pt.y, pt.z) for pt in list(d.discretization.pointList)]
         color = obj.appearance.ambient
         color = (color.red, color.green, color.blue)
-        if not(color in colordict):
-            count+=1
-            colordict[color]=count
-        attribute.append(colordict[color])
+        if color not in colordict:
+            count += 1
+            colordict[color] = count
         offset += len(pts)
+        attribute.extend([colordict[color]]*len(pts))
         indices.extend(idl.tolist())
     colors=np.array(colordict.keys())/255.
     print colors
     if len(colors) == 1:
-   	mesh = k3d.mesh(vertices=vertices, indices=indices, color=matplotlib.colors.to_hex(colors[0]))
+        c = np.array(colors[0]*255, dtype=np.uint8)
+        r, g, b = map(int, c)
+        mesh = k3d.mesh(vertices=vertices,
+                        indices=indices,
+                        #color=Color3(r,g,b).toUint(),
+                        )
     else:
-    	color_map = zip(list(np.array(colordict.values())/float(max(colordict.values()))), colors[:,0], colors[:,1], colors[:,2])
+        color_map = zip(list(np.array(colordict.values()) /
+                             float(max(colordict.values()))),
+                        colors[:,0],
+                        colors[:,1],
+                        colors[:,2])
     	attribute = list(np.array(attribute)/float(max(attribute)))
     	#print attribute
     	#print color_map
-    	mesh = k3d.mesh(vertices=vertices, indices=indices, attribute=attribute, color_map=color_map)
+    	mesh = k3d.mesh(vertices=vertices,
+                        indices=indices,
+                        attribute=attribute,
+                        color_map=color_map)
     return mesh
 
 
