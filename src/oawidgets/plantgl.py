@@ -36,12 +36,8 @@ def scene2mesh(scene):
     colors=np.array(colordict.keys())/255.
     print colors
     if len(colors) == 1:
-        c = np.array(colors[0]*255, dtype=np.uint8)
-        r, g, b = map(int, c)
-        mesh = k3d.mesh(vertices=vertices,
-                        indices=indices,
-                        #color=Color3(r,g,b).toUint(),
-                        )
+        colorhex = int(matplotlib.colors.rgb2hex(colors[0])[1:], 16)
+   	    mesh = k3d.mesh(vertices=vertices, indices=indices, color=colorhex)
     else:
         color_map = zip(list(np.array(colordict.values()) /
                              float(max(colordict.values()))),
