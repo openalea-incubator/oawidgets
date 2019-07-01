@@ -3,6 +3,11 @@ import matplotlib
 import numpy as np
 import k3d
 
+def tupleinlist(list, tuple):
+    for i in range(len(tuple)):
+	list.append(tuple(i))
+    return list
+
 def tomesh(geometry, d=None):
     """Return a mesh from a geometry object"""
     if d is None:
@@ -36,7 +41,7 @@ def scene2mesh(scene):
         attribute.extend([colordict[color]]*len(pts))
         indices.extend(idl.tolist())
     colors=np.array(colordict.keys())/255.
-    #print colors
+    #print len(colors)
     if len(colors) == 1:
         colorhex = int(matplotlib.colors.rgb2hex(colors[0])[1:], 16)
         mesh = k3d.mesh(vertices=vertices, indices=indices)
@@ -47,16 +52,18 @@ def scene2mesh(scene):
                         colors[:,0],
                         colors[:,1],
                         colors[:,2])
+        color_map.sort()
         attribute = list(np.array(attribute)/float(max(attribute)))
-        #print attribute
-        #print color_map
+        #print len(attribute)
+        #color_map = k3d.basic_color_maps.Jet
+	#print color_map
         mesh = k3d.mesh(vertices=vertices,
                         indices=indices,
                         attribute=attribute,
                         color_map=color_map)
 
-    print('len vertices', len(vertices))
-    print('len attributes', len(attribute))
+    #print('len vertices', len(vertices))
+    #print('len attributes', len(attribute))
 
     return mesh
 
