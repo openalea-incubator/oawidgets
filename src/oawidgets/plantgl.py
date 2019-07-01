@@ -36,7 +36,7 @@ def scene2mesh(scene):
         attribute.extend([colordict[color]]*len(pts))
         indices.extend(idl.tolist())
     colors=np.array(colordict.keys())/255.
-    print colors
+    #print colors
     if len(colors) == 1:
         colorhex = int(matplotlib.colors.rgb2hex(colors[0])[1:], 16)
         mesh = k3d.mesh(vertices=vertices, indices=indices)
