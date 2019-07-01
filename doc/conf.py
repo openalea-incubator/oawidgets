@@ -1,3 +1,5 @@
+#nbsphinx_execute = 'never'
+
 # {# pkglts, sphinx
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
@@ -53,9 +55,14 @@ extensions = [
     'sphinx.ext.mathjax',
     'sphinx.ext.napoleon',
     'sphinx.ext.todo',
-    'sphinx.ext.viewcode',
-    'nbsphinx'
+    'sphinx.ext.viewcode'
+#    'nbsphinx'
 ]
+
+#sphinx_gallery_conf = {
+#     'examples_dirs': '../example',    # path to your example scripts
+#     'gallery_dirs': 'auto_examples',  # path where to save gallery generated examples
+#}
 
 # try to add more extensions which are not default
 # but still useful
@@ -113,7 +120,7 @@ release = "0.0.1"
 
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
-exclude_patterns = ['build', 'dist']
+exclude_patterns = ['build', 'dist', '**.ipynb_checkpoints']
 
 # The reST default role (used for this markup: `text`) to use for all
 # documents.

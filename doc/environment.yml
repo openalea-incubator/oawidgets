@@ -1,0 +1,22 @@
+name: oawidgets
+channels:
+  - openalea
+  - defaults
+  - conda-forge
+dependencies:
+  - python=2.7
+  - mpfr<4
+  - openalea.sconsx
+  - openalea.misc
+  - openalea.plantgl
+  - boost=1.66
+  - pip :
+    - nbsphinx
+  - sphinx>=1.6
+  - k3d
+  - ipython
+  - openalea.mtg
+  - ipykernel
+  - pandoc
+  - nbconvert!=5.4
+  - pip

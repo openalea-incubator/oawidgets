@@ -2,6 +2,7 @@ from openalea.plantgl.all import *
 import k3d
 
 def tomesh(geometry, d=None):
+    """Return a mesh from a geometry object"""
     if d is None:
         d = Tesselator()
 
@@ -11,18 +12,19 @@ def tomesh(geometry, d=None):
     mesh = k3d.mesh(vertices=pts, indices=idl)
     return mesh
 
-def PlantGL(pglobject):
-    plot = k3d.plot(camera_auto_fit=False)
-    d = Discretizer()
+def PlantGL(pglobject, plot=None):
+    """Return a k3d plot from PlantGL shape, geometry and scene objects"""
+    if plot is None:
+        plot = k3d.plot()
 
     if isinstance(pglobject, Geometry):
         mesh = tomesh(pglobject)
         plot += mesh
     elif isinstance(pglobject, Shape):
         mesh = tomesh(pglobject.geometry)
+        mesh.color = pglobject.appearance.ambient.toUint()
         plot += mesh
     elif isinstance(pglobject, Scene):
         for sh in pglobject:
-            mesh = tomesh(sh.geometry)
-            plot+= mesh
+            PlantGL(sh,plot)
     return plot

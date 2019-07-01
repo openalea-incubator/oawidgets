@@ -64,7 +64,7 @@ from IPython.display import Image, display
 _mimetypes = {'png' : 'image/png',
              'svg' : 'image/svg+xml',
              'jpg' : 'image/jpeg',
-              'jpeg': 'image/jpeg'}
+             'jpeg': 'image/jpeg'}
 
 @magics_class
 class LpyMagics(Magics):
@@ -88,18 +88,21 @@ class LpyMagics(Magics):
 
     def _plot3d(self, scene, format='png'):
         """
-        Baptise
+        Baptiste
         TODO: Replace by the k3d plantgl connection.
         """
-        fn = tempfile.mktemp(suffix='.'+format)
-        Viewer.frameGL.setBgColor(255,255,255)
-        #Viewer.animation(True)
-        Viewer.display(scene)
-        Viewer.saveSnapshot(fn, format)
-        img = open(fn, 'rb').read()
-        os.unlink(fn)
-        return img
-
+        # fn = tempfile.mktemp(suffix='.'+format)
+        # Viewer.frameGL.setBgColor(255,255,255)
+        # #Viewer.animation(True)
+        # Viewer.display(scene)
+        # Viewer.saveSnapshot(fn, format)
+        # img = open(fn, 'rb').read()
+        # os.unlink(fn)
+        # return img
+        from oawidgets import plantgl
+        data = plantgl.PlantGL(scene)
+        display(data)
+        return None
 
     @skip_doctest
     @line_magic
@@ -170,15 +173,9 @@ class LpyMagics(Magics):
         help='Name of scene variable to be pulled from LPy after executing cell.'
         )
     @argument(
-        '-g', '--mtg', action='append',
-        help='Name of MTG variable to be pulled from LPy after executing cell.'
-        )
-
-    @argument(
         '-n', '--nbstep', action='append',
         help='Number of steps to be run by LPy..'
         )
-
     @argument(
         '-f', '--format', action='store',
         help='Plot format (png, svg or jpg).'
@@ -278,7 +275,7 @@ class LpyMagics(Magics):
 
         workstring = ''
         if args.workstring:
-            workstring = ','.join(args.workstring).split(',')[0]
+            workstring = args.workstring[0]
             workstring = unicode_to_str(workstring)
             try:
                 workstring = local_ns[workstring]
@@ -291,16 +288,17 @@ class LpyMagics(Magics):
                 self._lsys.makeCurrent()
                 workstring = lpy.AxialTree(workstring)
                 self._lsys.done()
-
-            try:
-                ws = local_ns[workstring]
-            except KeyError:
-                ws = self.shell.user_ns[workstring]
-
-            if isinstance(ws,MTG):
-                workstring = mtg2lpy(ws,self._lsys)
+            elif isinstance(workstring, MTG):
+                workstring = mtg2lpy(workstring,self._lsys)
             else:
-                workstring = ws
+                pass
+
+            # try:
+            #     ws = local_ns[workstring]
+            # except KeyError:
+            #     ws = self.shell.user_ns[workstring]
+
+
         n = 1
         if args.nbstep:
            n = int(args.nbstep[0])
@@ -341,7 +339,7 @@ class LpyMagics(Magics):
 
 
         key = 'LpyMagic.Lpy'
-        display_data = []
+        display_data = {}
 
         # Publish text output
         """
@@ -349,21 +347,22 @@ class LpyMagics(Magics):
             display_data.append((key, {'text/plain': text_output}))
         """
         # Publish images
-        images = [self._plot3d(scene, format=plot_format)]
+        image = self._plot3d(scene, format=plot_format)
+        if image is not None:
+        	plot_mime_type = _mimetypes.get(plot_format, 'image/png')
+        	#width, height = [int(s) for s in size.split(',')]
+        	#for image in images:
+        	display_data[plot_mime_type]= image
 
-        plot_mime_type = _mimetypes.get(plot_format, 'image/png')
-        #width, height = [int(s) for s in size.split(',')]
-        for image in images:
-            display_data.append((key, {plot_mime_type: image}))
-
-        """
-        if args.output:
-            for output in ','.join(args.output).split(','):
-                output = unicode_to_str(output)
-                self.shell.push({output: self._oct.get(output)})
-        """
-        for source, data in display_data:
-            self._publish_display_data(source, data)
+	        """
+	        if args.output:
+	            for output in ','.join(args.output).split(','):
+	                output = unicode_to_str(output)
+	                self.shell.push({output: self._oct.get(output)})
+	        """
+	        #for source, data in display_data:
+	        #    self._publish_display_data(source, data)
+	        self._publish_display_data(data=display_data)
 
         if return_output:
             return tree if not mtg else mtg
