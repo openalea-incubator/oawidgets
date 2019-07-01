@@ -74,22 +74,6 @@ def PlantGL(pglobject, plot=None):
         mesh.color = pglobject.appearance.ambient.toUint()
         plot += mesh
     elif isinstance(pglobject, Scene):
-        for sh in pglobject:
-            PlantGL(sh,plot)
-    return plot
-
-def PlantGLscene(pglobject, plot=None):
-    if plot is None:
-        plot = k3d.plot()
-
-    if isinstance(pglobject, Geometry):
-        mesh = tomesh(pglobject)
-        plot += mesh
-    elif isinstance(pglobject, Shape):
-        mesh = tomesh(pglobject.geometry)
-        mesh.color = pglobject.appearance.ambient.toUint()
-        plot += mesh
-    elif isinstance(pglobject, Scene):
         mesh = scene2mesh(pglobject)
         plot += mesh
     return plot
