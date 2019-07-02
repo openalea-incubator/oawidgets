@@ -1,12 +1,8 @@
 from openalea.plantgl.all import *
+from random import randint
 import matplotlib
 import numpy as np
 import k3d
-
-def tupleinlist(list, tuple):
-    for i in range(len(tuple)):
-	list.append(tuple(i))
-    return list
 
 def tomesh(geometry, d=None):
     """Return a mesh from a geometry object"""
@@ -41,7 +37,6 @@ def scene2mesh(scene):
         attribute.extend([colordict[color]]*len(pts))
         indices.extend(idl.tolist())
     colors=np.array(colordict.keys())/255.
-    #print len(colors)
     if len(colors) == 1:
         colorhex = int(matplotlib.colors.rgb2hex(colors[0])[1:], 16)
         mesh = k3d.mesh(vertices=vertices, indices=indices)
@@ -54,17 +49,10 @@ def scene2mesh(scene):
                         colors[:,2])
         color_map.sort()
         attribute = list(np.array(attribute)/float(max(attribute)))
-        #print len(attribute)
-        #color_map = k3d.basic_color_maps.Jet
-	#print color_map
         mesh = k3d.mesh(vertices=vertices,
                         indices=indices,
                         attribute=attribute,
                         color_map=color_map)
-
-    #print('len vertices', len(vertices))
-    #print('len attributes', len(attribute))
-
     return mesh
 
 
@@ -83,4 +71,43 @@ def PlantGL(pglobject, plot=None):
     elif isinstance(pglobject, Scene):
         mesh = scene2mesh(pglobject)
         plot += mesh
+    plot.lighting = 3
+    plot.colorbar_object_id = randint(0,1000)
+    return plot
+
+
+def mtg2mesh(g, property_name):
+    """Return a mesh from a MTG object depending on a specific property"""
+    d = Tesselator()
+    geometry = g.property('geometry')
+    prop = g.property(property_name)
+    vertices, indices, attr = [], [], []
+    offset = 0
+    for vid, geom in geometry.iteritems():
+        if vid in prop:
+	    geom.apply(d)
+            idl = np.array([tuple(index) for index in list(d.discretization.indexList)])+offset
+            pts = [(pt.x, pt.y, pt.z) for pt in list(d.discretization.pointList)]
+            vertices.extend(pts)
+            offset += len(pts)
+            indices.extend(idl.tolist())
+            attr.extend([prop[vid]]*len(pts))
+        #else:
+        #    attr.extend([0]*len(pts))
+    mesh = k3d.mesh(vertices=vertices,
+                        indices=indices,
+                        attribute=attr,
+                        color_map=k3d.basic_color_maps.Jet)
+    return mesh
+
+
+def MTG(g, property_name, plot=None):
+    """Return a plot from a MTG object"""
+    if plot is None:
+        plot = k3d.plot()
+
+    mesh = mtg2mesh(g, property_name)
+    plot += mesh
+    plot.lighting = 3
+    plot.colorbar_object_id = randint(0,1000)
     return plot
