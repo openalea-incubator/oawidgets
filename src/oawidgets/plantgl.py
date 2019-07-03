@@ -1,8 +1,13 @@
+""" Convert a PlantGL scene to k3d.
+
+3D visualisation widgets in Jupyter.
+"""
 from openalea.plantgl.all import *
 from random import randint
 import matplotlib
 import numpy as np
 import k3d
+
 
 def tomesh(geometry, d=None):
     """Return a mesh from a geometry object"""
@@ -14,6 +19,7 @@ def tomesh(geometry, d=None):
     pts = [(pt.x, pt.y, pt.z) for pt in list(d.discretization.pointList)]
     mesh = k3d.mesh(vertices=pts, indices=idl)
     return mesh
+
 
 def scene2mesh(scene):
     """Return a mesh from a scene"""
@@ -57,45 +63,25 @@ def scene2mesh(scene):
     return mesh
 
 
-def test2meshes(scene):
+def group_meshes_by_color(scene):
+    """ Create one mesh by objects sharing the same color.
+    """
     d = Tesselator()
-    indices, vertices, colors, attribute, meshes=[], [], [], [], []
-    colordict={}
-    count=-1
-    offset=0
-    for obj in scene:
-        obj.geometry.apply(d)
-        idl = np.array([tuple(index) for index in list(d.discretization.indexList)])+offset
-        pts = [(pt.x, pt.y, pt.z) for pt in list(d.discretization.pointList)]
 
-        vertices.extend(pts)
+    group_color = {}
+
+    for obj in scene:
         color = obj.appearance.ambient
         color = (color.red, color.green, color.blue)
-        if color not in colordict:
-            count += 1
-            colordict[color] = count
-        offset += len(pts)
-        attribute.extend([colordict[color]]*len(pts))
-        indices.extend(idl.tolist())
-    colors=np.array(colordict.keys())/255.
-    attribute = np.array(attribute)
-    print ('len(vertices)', len(vertices))
-    print ('len(attribute)', len(attribute))
-    for i in range(len(colors)):
-        vert, ind = [], []
-        for j in range(len(attribute)):
-            if attribute[j] == i:
-            	vert.append(vertices[j])
-                ind.append(indices[j])
-        colorhex = int(matplotlib.colors.rgb2hex(colors[i])[1:], 16)
-        mesh = k3d.mesh(vertices=vert, indices=ind)
-        mesh.color = colorhex
-        meshes.append(mesh)
-        print ('len(vert)', len(vert))
-        print ('len(ind)', len(ind))
+
+        group_color.setdefault(color, []).append(obj)
+
+
+    meshes = [scene2mesh(objects) for objects in group_color.values()]
     return meshes
 
-def PlantGL(pglobject, plot=None):
+
+def PlantGL(pglobject, plot=None, group_by_color=True):
     """Return a k3d plot from PlantGL shape, geometry and scene objects"""
     if plot is None:
         plot = k3d.plot()
@@ -108,13 +94,16 @@ def PlantGL(pglobject, plot=None):
         mesh.color = pglobject.appearance.ambient.toUint()
         plot += mesh
     elif isinstance(pglobject, Scene):
-        #meshes = test2meshes(pglobject)
-        #for mesh in meshes:
-        #    plot += mesh
-        mesh = scene2mesh(pglobject)
-	plot += mesh
+        if group_by_color:
+            meshes = group_meshes_by_color(pglobject)
+            for mesh in meshes:
+                plot += mesh
+        else:
+            mesh = scene2mesh(pglobject)
+            plot += mesh
+
     plot.lighting = 3
-    plot.colorbar_object_id = randint(0,1000)
+    #plot.colorbar_object_id = randint(0, 1000)
     return plot
 
 
