@@ -48,6 +48,7 @@ def scene2mesh(scene):
                         colors[:,1],
                         colors[:,2])
         color_map.sort()
+        #color_map=k3d.basic_color_maps.Jet
         attribute = list(np.array(attribute)/float(max(attribute)))
         mesh = k3d.mesh(vertices=vertices,
                         indices=indices,
@@ -55,6 +56,44 @@ def scene2mesh(scene):
                         color_map=color_map)
     return mesh
 
+
+def test2meshes(scene):
+    d = Tesselator()
+    indices, vertices, colors, attribute, meshes=[], [], [], [], []
+    colordict={}
+    count=-1
+    offset=0
+    for obj in scene:
+        obj.geometry.apply(d)
+        idl = np.array([tuple(index) for index in list(d.discretization.indexList)])+offset
+        pts = [(pt.x, pt.y, pt.z) for pt in list(d.discretization.pointList)]
+
+        vertices.extend(pts)
+        color = obj.appearance.ambient
+        color = (color.red, color.green, color.blue)
+        if color not in colordict:
+            count += 1
+            colordict[color] = count
+        offset += len(pts)
+        attribute.extend([colordict[color]]*len(pts))
+        indices.extend(idl.tolist())
+    colors=np.array(colordict.keys())/255.
+    attribute = np.array(attribute)
+    print ('len(vertices)', len(vertices))
+    print ('len(attribute)', len(attribute))
+    for i in range(len(colors)):
+        vert, ind = [], []
+        for j in range(len(attribute)):
+            if attribute[j] == i:
+            	vert.append(vertices[j])
+                ind.append(indices[j])
+        colorhex = int(matplotlib.colors.rgb2hex(colors[i])[1:], 16)
+        mesh = k3d.mesh(vertices=vert, indices=ind)
+        mesh.color = colorhex
+        meshes.append(mesh)
+        print ('len(vert)', len(vert))
+        print ('len(ind)', len(ind))
+    return meshes
 
 def PlantGL(pglobject, plot=None):
     """Return a k3d plot from PlantGL shape, geometry and scene objects"""
@@ -69,8 +108,11 @@ def PlantGL(pglobject, plot=None):
         mesh.color = pglobject.appearance.ambient.toUint()
         plot += mesh
     elif isinstance(pglobject, Scene):
+        #meshes = test2meshes(pglobject)
+        #for mesh in meshes:
+        #    plot += mesh
         mesh = scene2mesh(pglobject)
-        plot += mesh
+	plot += mesh
     plot.lighting = 3
     plot.colorbar_object_id = randint(0,1000)
     return plot
