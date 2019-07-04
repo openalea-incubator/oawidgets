@@ -21,7 +21,7 @@ def tomesh(geometry, d=None):
     return mesh
 
 
-def scene2mesh(scene):
+def scene2mesh(scene, property=None):
     """Return a mesh from a scene"""
     d = Tesselator()
     indices, vertices, colors, attribute=[], [], [], []
@@ -43,7 +43,10 @@ def scene2mesh(scene):
         attribute.extend([colordict[color]]*len(pts))
         indices.extend(idl.tolist())
     colors=np.array(colordict.keys())/255.
-    if len(colors) == 1:
+    if property is not None:
+        property = np.repeat(np.array(property), [3]*len(property))
+        mesh = k3d.mesh(vertices=vertices, indices=indices, attribute=property, color_map=k3d.basic_color_maps.Jet, color_range=[min(property), max(property)])
+    elif len(colors) == 1:
         colorhex = int(matplotlib.colors.rgb2hex(colors[0])[1:], 16)
         mesh = k3d.mesh(vertices=vertices, indices=indices)
         mesh.color=colorhex
@@ -81,7 +84,7 @@ def group_meshes_by_color(scene):
     return meshes
 
 
-def PlantGL(pglobject, plot=None, group_by_color=True):
+def PlantGL(pglobject, plot=None, group_by_color=True, property=None):
     """Return a k3d plot from PlantGL shape, geometry and scene objects"""
     if plot is None:
         plot = k3d.plot()
@@ -99,7 +102,7 @@ def PlantGL(pglobject, plot=None, group_by_color=True):
             for mesh in meshes:
                 plot += mesh
         else:
-            mesh = scene2mesh(pglobject)
+            mesh = scene2mesh(pglobject, property)
             plot += mesh
 
     plot.lighting = 3
@@ -140,5 +143,4 @@ def MTG(g, property_name, plot=None):
     mesh = mtg2mesh(g, property_name)
     plot += mesh
     plot.lighting = 3
-    plot.colorbar_object_id = randint(0,1000)
     return plot
