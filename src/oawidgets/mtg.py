@@ -19,7 +19,7 @@ def dict2html(args, properties=None):
     return '<br>'.join(['%s %s'%(k, args[k]) for k in properties])
 
 
-def plot(g, properties=None, hlayout=True, scale=None, **kwds):
+def plot(g, properties=None, selection=None, hlayout=True, scale=None, labels=None, **kwds):
     """Plot a MTG in the Jupyter Notebook"""
     G = Network(notebook=True, directed=True,
                 layout=hlayout,
@@ -77,9 +77,15 @@ def plot(g, properties=None, hlayout=True, scale=None, **kwds):
     #Nodes adding
     for vid in vids:
         shape = 'box' if vid in component_roots else 'circle'
-        label_node = g.label(vid)
+	if labels is None:
+            label_node = g.label(vid)
+	else:
+	    label_node = labels[vid]
         level = levels[vid]
-        color = groups[g.complex(vid)]
+        if selection is None:
+	    color = groups[g.complex(vid)]
+	else:
+	    color = '#fb7e81' if vid in selection else '#97c2fc'
         title = dict2html(g[vid], properties=properties)
         #gap, mult = max(pos[1])-min(pos[1]), 20
         #x = mult*pos[g.parent(vid)][0] if g.parent(vid) else pos[vid][0]
