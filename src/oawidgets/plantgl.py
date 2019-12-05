@@ -1,7 +1,13 @@
+""" Convert a PlantGL scene to k3d.
+
+3D visualisation widgets in Jupyter.
+"""
 from openalea.plantgl.all import *
+from random import randint
 import matplotlib
 import numpy as np
 import k3d
+
 
 def tomesh(geometry, d=None):
     """Return a mesh from a geometry object"""
@@ -14,7 +20,8 @@ def tomesh(geometry, d=None):
     mesh = k3d.mesh(vertices=pts, indices=idl)
     return mesh
 
-def scene2mesh(scene):
+
+def scene2mesh(scene, property=None):
     """Return a mesh from a scene"""
     d = Tesselator()
     indices, vertices, colors, attribute=[], [], [], []
@@ -36,8 +43,10 @@ def scene2mesh(scene):
         attribute.extend([colordict[color]]*len(pts))
         indices.extend(idl.tolist())
     colors=np.array(colordict.keys())/255.
-    #print colors
-    if len(colors) == 1:
+    if property is not None:
+        property = np.repeat(np.array(property), [3]*len(property))
+        mesh = k3d.mesh(vertices=vertices, indices=indices, attribute=property, color_map=k3d.basic_color_maps.Jet, color_range=[min(property), max(property)])
+    elif len(colors) == 1:
         colorhex = int(matplotlib.colors.rgb2hex(colors[0])[1:], 16)
         mesh = k3d.mesh(vertices=vertices, indices=indices)
         mesh.color=colorhex
@@ -47,21 +56,35 @@ def scene2mesh(scene):
                         colors[:,0],
                         colors[:,1],
                         colors[:,2])
+        color_map.sort()
+        #color_map=k3d.basic_color_maps.Jet
         attribute = list(np.array(attribute)/float(max(attribute)))
-        #print attribute
-        #print color_map
         mesh = k3d.mesh(vertices=vertices,
                         indices=indices,
                         attribute=attribute,
                         color_map=color_map)
-
-    print('len vertices', len(vertices))
-    print('len attributes', len(attribute))
-
     return mesh
 
 
-def PlantGL(pglobject, plot=None):
+def group_meshes_by_color(scene):
+    """ Create one mesh by objects sharing the same color.
+    """
+    d = Tesselator()
+
+    group_color = {}
+
+    for obj in scene:
+        color = obj.appearance.ambient
+        color = (color.red, color.green, color.blue)
+
+        group_color.setdefault(color, []).append(obj)
+
+
+    meshes = [scene2mesh(objects) for objects in group_color.values()]
+    return meshes
+
+
+def PlantGL(pglobject, plot=None, group_by_color=True, property=None):
     """Return a k3d plot from PlantGL shape, geometry and scene objects"""
     if plot is None:
         plot = k3d.plot()
@@ -74,22 +97,50 @@ def PlantGL(pglobject, plot=None):
         mesh.color = pglobject.appearance.ambient.toUint()
         plot += mesh
     elif isinstance(pglobject, Scene):
-        for sh in pglobject:
-            PlantGL(sh,plot)
+        if group_by_color:
+            meshes = group_meshes_by_color(pglobject)
+            for mesh in meshes:
+                plot += mesh
+        else:
+            mesh = scene2mesh(pglobject, property)
+            plot += mesh
+
+    plot.lighting = 3
+    #plot.colorbar_object_id = randint(0, 1000)
     return plot
 
-def PlantGLscene(pglobject, plot=None):
+
+def mtg2mesh(g, property_name):
+    """Return a mesh from a MTG object depending on a specific property"""
+    d = Tesselator()
+    geometry = g.property('geometry')
+    prop = g.property(property_name)
+    vertices, indices, attr = [], [], []
+    offset = 0
+    for vid, geom in geometry.iteritems():
+        if vid in prop:
+	    geom.apply(d)
+            idl = np.array([tuple(index) for index in list(d.discretization.indexList)])+offset
+            pts = [(pt.x, pt.y, pt.z) for pt in list(d.discretization.pointList)]
+            vertices.extend(pts)
+            offset += len(pts)
+            indices.extend(idl.tolist())
+            attr.extend([prop[vid]]*len(pts))
+        #else:
+        #    attr.extend([0]*len(pts))
+    mesh = k3d.mesh(vertices=vertices,
+                        indices=indices,
+                        attribute=attr,
+                        color_map=k3d.basic_color_maps.Jet)
+    return mesh
+
+
+def MTG(g, property_name, plot=None):
+    """Return a plot from a MTG object"""
     if plot is None:
         plot = k3d.plot()
 
-    if isinstance(pglobject, Geometry):
-        mesh = tomesh(pglobject)
-        plot += mesh
-    elif isinstance(pglobject, Shape):
-        mesh = tomesh(pglobject.geometry)
-        mesh.color = pglobject.appearance.ambient.toUint()
-        plot += mesh
-    elif isinstance(pglobject, Scene):
-        mesh = scene2mesh(pglobject)
-        plot += mesh
+    mesh = mtg2mesh(g, property_name)
+    plot += mesh
+    plot.lighting = 3
     return plot
