@@ -85,7 +85,7 @@ def plot(g, properties=None, selection=None, hlayout=True, scale=None, labels=No
         label_node = labels[vid]
         level = levels[vid]
     if selection is None:
-            color = groups[g.complex(vid)]
+        color = groups[g.complex(vid)]
     else:
         color = '#fb7e81' if vid in selection else '#97c2fc'
         title = dict2html(g[vid], properties=properties)

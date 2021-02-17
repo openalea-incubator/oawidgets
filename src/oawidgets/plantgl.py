@@ -122,7 +122,7 @@ def mtg2mesh(g, property_name):
     prop = g.property(property_name)
     vertices, indices, attr = [], [], []
     offset = 0
-     for vid, geom in six.iteritems(geometry):
+    for vid, geom in six.iteritems(geometry):
         if vid in prop:
             geom.apply(d)
             idl = np.array([tuple(index) for index in list(d.discretization.indexList)])+offset
