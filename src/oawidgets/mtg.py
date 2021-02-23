@@ -79,30 +79,30 @@ def plot(g, properties=None, selection=None, hlayout=True, scale=None, labels=No
     #Nodes adding
     for vid in vids:
         shape = 'box' if vid in component_roots else 'circle'
-    if labels is None:
+        if labels is None:
             label_node = g.label(vid)
-    else:
-        label_node = labels[vid]
+        else:
+            label_node = labels[vid]
         level = levels[vid]
-    if selection is None:
-        color = groups[g.complex(vid)]
-    else:
-        color = '#fb7e81' if vid in selection else '#97c2fc'
+        if selection is None:
+            color = groups[g.complex(vid)]
+        else:
+            color = '#fb7e81' if vid in selection else '#97c2fc'
         title = dict2html(g[vid], properties=properties)
         #gap, mult = max(pos[1])-min(pos[1]), 20
         #x = mult*pos[g.parent(vid)][0] if g.parent(vid) else pos[vid][0]
         # #y = mult*(gap - pos[vid][1]) #if g.parent(vid) else None
         #physics = False if ('edge_type' not in g[vid] or g[vid]['edge_type']=='<' or g.nb_children(vid)>0) else True
         G.add_node(vid, shape=shape,
-                   label=label_node,
-                   level=level,
-                   color=color,
-		   title=title,
-                   borderWidth=3,
-		   #x=x,
-                   #y=y,
-                   #physics=physics,
-                   )
+                    label=label_node,
+                    level=level,
+                    color=color,
+                    title=title,
+                    borderWidth=3,
+                    #x=x,
+                    #y=y,
+                    #physics=physics,
+                    )
 
     #Cluster
     if False:
