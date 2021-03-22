@@ -21,11 +21,11 @@ def dict2html(args, properties=None):
     return '<br>'.join(['%s %s'%(k, args[k]) for k in properties])
 
 
-def plot(g, properties=None, selection=None, hlayout=True, scale=None, labels=None, **kwds):
+def plot(g, properties=None, selection=None, hlayout=True, scale=None, labels=None, height='800px', width='900px', **kwds):
     """Plot a MTG in the Jupyter Notebook"""
     G = Network(notebook=True, directed=True,
-                layout=hlayout,
-                height='800px', width='900px')
+                layout=hlayout, heading="",
+                height=height, width=width)
 
     if hlayout:
         G.hrepulsion()
