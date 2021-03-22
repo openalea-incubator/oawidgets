@@ -2,11 +2,16 @@
 
 3D visualisation widgets in Jupyter.
 """
+from __future__ import absolute_import
+
 from openalea.plantgl.all import *
 from random import randint
 import matplotlib
 import numpy as np
 import k3d
+
+import six
+from six.moves import zip
 
 
 def tomesh(geometry, d=None):
@@ -20,6 +25,46 @@ def tomesh(geometry, d=None):
     mesh = k3d.mesh(vertices=pts, indices=idl)
     return mesh
 
+def curve2mesh(crv, property=None):
+    """Return a mesh from a curve"""
+    d = Discretizer()
+    indices, vertices, colors, attribute=[], [], [], []
+    colordict={}
+    count=-1
+    offset=0
+    for obj in crv:
+        status = obj.apply(d)
+        pts = [(pt.x, pt.y, pt.z) for pt in list(d.result.pointList)]
+
+        vertices.extend(pts)
+        color = obj.appearance.ambient
+        color = (color.red, color.green, color.blue)
+        if color not in colordict:
+            count += 1
+            colordict[color] = count
+        offset += len(pts)
+        attribute.extend([colordict[color]]*len(pts))
+
+    colors=np.array(list(colordict.keys()))/255.
+    if property is not None:
+        property = np.repeat(np.array(property), [3]*len(property))
+        mesh = k3d.line(vertices, shader='mesh', attribute=property, color_map=k3d.basic_color_maps.Jet, color_range=[min(property), max(property)])
+    elif len(colors) == 1:
+        colorhex = int(matplotlib.colors.rgb2hex(colors[0])[1:], 16)
+        mesh = k3d.line(vertices, shader='mesh')
+        mesh.color=colorhex
+    else:
+        color_map = list(zip(list(np.array(list(colordict.values())) /
+                             float(max(colordict.values()))),
+                        colors[:,0],
+                        colors[:,1],
+                        colors[:,2]))
+        color_map.sort()
+        #color_map=k3d.basic_color_maps.Jet
+        attribute = list(np.array(attribute)/float(max(attribute)))
+        mesh = k3d.line(vertices, shader='mesh', attribute=attribute, color_map=color_map)
+
+    return mesh
 
 def scene2mesh(scene, property=None):
     """Return a mesh from a scene"""
@@ -42,7 +87,7 @@ def scene2mesh(scene, property=None):
         offset += len(pts)
         attribute.extend([colordict[color]]*len(pts))
         indices.extend(idl.tolist())
-    colors=np.array(colordict.keys())/255.
+    colors=np.array(list(colordict.keys()))/255.
     if property is not None:
         property = np.repeat(np.array(property), [3]*len(property))
         mesh = k3d.mesh(vertices=vertices, indices=indices, attribute=property, color_map=k3d.basic_color_maps.Jet, color_range=[min(property), max(property)])
@@ -51,11 +96,11 @@ def scene2mesh(scene, property=None):
         mesh = k3d.mesh(vertices=vertices, indices=indices)
         mesh.color=colorhex
     else:
-        color_map = zip(list(np.array(colordict.values()) /
+        color_map = list(zip(list(np.array(list(colordict.values())) /
                              float(max(colordict.values()))),
                         colors[:,0],
                         colors[:,1],
-                        colors[:,2])
+                        colors[:,2]))
         color_map.sort()
         #color_map=k3d.basic_color_maps.Jet
         attribute = list(np.array(attribute)/float(max(attribute)))
@@ -69,7 +114,6 @@ def scene2mesh(scene, property=None):
 def group_meshes_by_color(scene):
     """ Create one mesh by objects sharing the same color.
     """
-    d = Tesselator()
 
     group_color = {}
 
@@ -79,9 +123,21 @@ def group_meshes_by_color(scene):
 
         group_color.setdefault(color, []).append(obj)
 
+    curves = {}
+    k_to_pop = []
+    for k, obj in group_color.items():
+        if obj[0].geometry.isACurve():
+            curves[k] = obj
+            k_to_pop.append(k)
+    for k in k_to_pop:
+        group_color.pop(k)
 
-    meshes = [scene2mesh(objects) for objects in group_color.values()]
-    return meshes
+    # only one curve element in group_color - so take that element to split its lines
+    if curves:
+        meshes_crv = [curve2mesh([obj]) for obj in list(curves.values())[0]]
+    meshes_scene = [scene2mesh(objects) for objects in group_color.values()]
+    meshes_scene.extend(meshes_crv)
+    return meshes_scene
 
 
 def PlantGL(pglobject, plot=None, group_by_color=True, property=None):
@@ -117,9 +173,9 @@ def mtg2mesh(g, property_name):
     prop = g.property(property_name)
     vertices, indices, attr = [], [], []
     offset = 0
-    for vid, geom in geometry.iteritems():
+    for vid, geom in six.iteritems(geometry):
         if vid in prop:
-	    geom.apply(d)
+            geom.apply(d)
             idl = np.array([tuple(index) for index in list(d.discretization.indexList)])+offset
             pts = [(pt.x, pt.y, pt.z) for pt in list(d.discretization.pointList)]
             vertices.extend(pts)

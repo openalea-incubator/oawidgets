@@ -36,6 +36,9 @@ Usage
 #  the file COPYING, distributed as part of this software.
 #-----------------------------------------------------------------------------
 
+from __future__ import absolute_import
+from __future__ import print_function
+
 import tempfile, os
 from glob import glob
 from shutil import rmtree
@@ -315,7 +318,7 @@ class LpyMagics(Magics):
         if len(parameters) > 0:
             self._lsys.context().updateNamespace(parameters)
 
-        print 'DEBUG: ', workstring, c_iter, n
+        print('DEBUG: ', workstring, c_iter, n)
         tree = self._lsys.iterate(workstring,c_iter,n)
 
         if args.axialtree:
