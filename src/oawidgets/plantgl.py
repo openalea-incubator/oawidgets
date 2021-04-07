@@ -82,7 +82,11 @@ def scene2mesh(scene, property=None):
     colordict={}
     count=-1
     offset=0
+    curves = []
     for obj in scene:
+        if obj.geometry.isACurve():
+            curves.append(obj)
+            continue
         obj.geometry.apply(d)
         idl = np.array([tuple(index) for index in list(d.discretization.indexList)])+offset
         pts = [(pt.x, pt.y, pt.z) for pt in list(d.discretization.pointList)]
@@ -117,7 +121,12 @@ def scene2mesh(scene, property=None):
                         indices=indices,
                         attribute=attribute,
                         color_map=color_map)
-    return mesh
+
+    meshes = [mesh]
+    if curves:
+        meshes.extend(curve2mesh(curves))
+
+    return meshes
 
 
 def group_meshes_by_color(scene):
@@ -144,7 +153,7 @@ def group_meshes_by_color(scene):
     # only one curve element in group_color - so take that element to split its lines
     if curves:
         meshes_crv = [curve2mesh([obj]) for obj in list(curves.values())[0]]
-    meshes_scene = [scene2mesh(objects) for objects in group_color.values()]
+    meshes_scene = [scene2mesh(objects)[0] for objects in group_color.values()]
     meshes_scene.extend(meshes_crv)
     return meshes_scene
 
@@ -167,8 +176,9 @@ def PlantGL(pglobject, plot=None, group_by_color=True, property=None):
             for mesh in meshes:
                 plot += mesh
         else:
-            mesh = scene2mesh(pglobject, property)
-            plot += mesh
+            meshes = scene2mesh(pglobject, property)
+            for mesh in meshes:
+                plot += mesh
 
     plot.lighting = 3
     #plot.colorbar_object_id = randint(0, 1000)
