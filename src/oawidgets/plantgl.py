@@ -16,13 +16,22 @@ from six.moves import zip
 
 def tomesh(geometry, d=None):
     """Return a mesh from a geometry object"""
+    isCurve = False
+    if geometry.isACurve():
+        isCurve = True
+    
     if d is None:
-        d = Tesselator()
+        d = Tesselator() if not isCurve else Discretizer()
 
     geometry.apply(d)
-    idl = [tuple(index) for index in list(d.discretization.indexList)]
-    pts = [(pt.x, pt.y, pt.z) for pt in list(d.discretization.pointList)]
-    mesh = k3d.mesh(vertices=pts, indices=idl)
+
+    if isCurve:
+        pts = [(pt.x, pt.y, pt.z) for pt in list(d.result.pointList)]
+        mesh = k3d.line(pts, shader='mesh')
+    else:
+        idl = [tuple(index) for index in list(d.discretization.indexList)]
+        pts = [(pt.x, pt.y, pt.z) for pt in list(d.discretization.pointList)]
+        mesh = k3d.mesh(vertices=pts, indices=idl)
     return mesh
 
 def curve2mesh(crv, property=None):
