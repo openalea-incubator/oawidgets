@@ -124,7 +124,8 @@ def scene2mesh(scene, property=None):
 
     meshes = [mesh]
     if curves:
-        meshes.extend(curve2mesh(curves))
+        meshes.extend([curve2mesh([crv]) for crv in curves])
+        print("Display %d curves"%len(curves))
 
     return meshes
 
