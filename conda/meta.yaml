@@ -1,0 +1,36 @@
+{% set data = load_setup_py_data() %}
+
+package:
+  name: oawidgets
+  version: {{ data.get('version') }}
+
+source:
+  path: ..
+
+build:
+  preserve_egg_dir: True
+  number: 0
+  script: python setup.py install
+
+requirements:
+  host:
+      - python {{PY_VER}}
+      - openalea.plantgl
+      - openalea.mtg
+  build:
+      - python {{PY_VER}}
+      - setuptools
+  run:
+      - python {{PY_VER}}
+      - ipython
+      - openalea.lpy
+      - openalea.mtg
+      - k3d
+      - pyvis
+      - matplotlib
+
+about:
+  home: http://openalea.rtfd.io/
+  license: CeCILL_C
+  summary: oawidgets provides Jupyter widgets for MTG and 3D visualization as well as lpy
+

@@ -16,9 +16,7 @@ Installation
 
 Install the following packages::
 
-    conda install -c openalea -c openalea/label/unstable -c conda-forge openalea.plantgl openalea.lpy boost=1.66 k3d openalea.mtg
+    conda install -c openalea3 -c conda-forge oawidgets
 
-Then, install pyvis::
 
-    pip install pyvis
 
