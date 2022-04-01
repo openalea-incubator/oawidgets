@@ -2,7 +2,7 @@ name: Building Package using Conda
 
 on:
   push:
-    branches: [ master ]
+    branches: [ master, pradal-test ]
   pull_request:
     branches: [ master ]
 
@@ -101,5 +101,5 @@ jobs:
           echo "PACKAGE NAME is not defined"
           exit -1
         fi
-        anaconda upload --skip-existing $BUILD_OUTPUT -u $ANACONDA_OWNER --no-progress
+        # anaconda upload --skip-existing $BUILD_OUTPUT -u $ANACONDA_OWNER --no-progress
 
