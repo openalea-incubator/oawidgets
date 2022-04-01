@@ -13,12 +13,12 @@ jobs:
     strategy:
       #max-parallel: 5
       matrix:
-        os: [ macos-latest, ubuntu-latest]
+        os: [windows-latest] #macos-latest, ubuntu-latest,
         env:
-          - CONDA_PY: "37"
-            CONDA_NPY: "111" 
-          - CONDA_PY: "38" 
-            CONDA_NPY: "116"
+          #- CONDA_PY: "37"
+          #  CONDA_NPY: "111" 
+          #- CONDA_PY: "38" 
+          #  CONDA_NPY: "116"
           - CONDA_PY: "39" 
             CONDA_NPY: "119"
 
@@ -36,12 +36,12 @@ jobs:
     - name: Setup conda
       run: |
         # Setup conda
-        sudo conda config --add channels conda-forge
-        sudo conda config --add channels openalea3
-        sudo conda config --set always_yes yes
-        sudo conda config --set remote_read_timeout_secs 600
-        sudo conda config --set auto_update_conda False
-        sudo conda install conda-build anaconda-client
+        conda config --add channels conda-forge
+        conda config --add channels openalea3
+        conda config --set always_yes yes
+        conda config --set remote_read_timeout_secs 600
+        conda config --set auto_update_conda False
+        conda install conda-build anaconda-client
 
     - name: Build 
       env:
@@ -60,7 +60,7 @@ jobs:
         export PYTHON_VERSION=${CONDA_PY:0:1}.${CONDA_PY:1:1}
         export NUMPY_VERSION=${CONDA_NPY:0:1}.${CONDA_NPY:1:2}
 
-        export BUILD_CMD="sudo conda build . --python=$PYTHON_VERSION"
+        export BUILD_CMD="conda build . --python=$PYTHON_VERSION"
         export BUILD_OUTPUT=`$BUILD_CMD --output`
 
         if [[ "$BUILD_OUTPUT" = "" ]]; then
