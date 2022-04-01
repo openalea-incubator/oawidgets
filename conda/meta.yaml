@@ -13,10 +13,6 @@ build:
   script: python setup.py install
 
 requirements:
-  host:
-      - python {{PY_VER}}
-      - openalea.plantgl
-      - openalea.mtg
   build:
       - python {{PY_VER}}
       - setuptools

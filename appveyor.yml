@@ -13,7 +13,7 @@ environment:
       CONDA_NPY: 119
 
 install:
-  - git clone https://github.com/OpenAlea/appveyor-ci.git
+  - git clone https://github.com/openalea/appveyor-ci.git
   - cd appveyor-ci
   - call install.bat
   - conda config --prepend channels conda-forge
