@@ -50,13 +50,14 @@ jobs:
       uses: haya14busa/action-cond@v1
       id: publish
       with:
-        cond: ${{ contains(github.ref, 'dev_GH-actions') || startsWith(github.ref, 'refs/heads/v') }}
+        cond: ${{ contains(github.ref, 'stable') || startsWith(github.ref, 'refs/heads/v') }}
         if_true: 'true'
         if_false: 'false'
     - name: Build and Publish
       uses: ./.github/actions/build-publish-anaconda
       with:
         conda: conda
+        mamba: true
         python: ${{ matrix.python-minor-version }}
         channels: openalea3, conda-forge
         token: ${{ secrets.ANACONDA_TOKEN }}
