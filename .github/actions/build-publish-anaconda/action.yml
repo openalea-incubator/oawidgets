@@ -73,13 +73,13 @@ runs:
         echo "Associate numpy version to python version provided"
         export PYTHON_VERSION="3.${{ inputs.python }}"
         echo "Python version is ${PYTHON_VERSION}"
-        if [ ${PYTHON_VERSION}=="3.7" ]; then
+        if [[ ${PYTHON_VERSION} -eq "3.7" ]]; then
           export NUMPY_VERSION="1.11"
           echo "Set numpy version to ${NUMPY_VERSION}"
-        elif [ ${PYTHON_VERSION}=="3.8" ]; then
+        elif [[ ${PYTHON_VERSION} -eq "3.8" ]]; then
           export NUMPY_VERSION="1.16"
           echo "Set numpy version to ${NUMPY_VERSION}"
-        elif [ ${PYTHON_VERSION}=="3.9" ]; then
+        elif [[ ${PYTHON_VERSION} -eq "3.9" ]]; then
           export NUMPY_VERSION="1.19"
           echo "Set numpy version to ${NUMPY_VERSION}"
         else
