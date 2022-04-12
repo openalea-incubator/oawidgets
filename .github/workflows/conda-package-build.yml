@@ -20,8 +20,17 @@ jobs:
           - ${{ github.ref == 'refs/heads/master' }}
         exclude:
           - isMaster: false
-            os: [macos-latest , windows-latest]
-            python-minor-version: [7, 8]
+            os: macos-latest
+            python-minor-version: 7
+          - isMaster: false
+            os: macos-latest
+            python-minor-version: 8
+          - isMaster: false
+            os: windows-latest
+            python-minor-version: 7
+          - isMaster: false
+            os: windows-latest
+            python-minor-version: 8
 
     steps:
     - uses: actions/checkout@v3
