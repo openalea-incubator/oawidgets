@@ -33,7 +33,7 @@ jobs:
         if_true: 'true'
         if_false: 'false'
     - name: Build and Publish
-      uses: .github/actions/action-build-publish-anaconda.yml
+      uses: ./.github/actions/build-publish-anaconda
       with:
         conda: conda
         python: ${{ matrix.python-minor-version }}
