@@ -16,10 +16,12 @@ jobs:
       matrix:
         os: [ ubuntu-latest , macos-latest , windows-latest]
         python-minor-version: [7, 8, 9]
+        isMaster:
+          - ${{ github.ref == 'refs/heads/master') }}
         exclude:
-          - os: [macos-latest , windows-latest]
-            python-minor-version: [7, 8]     
-            if: ${{ contains(github.ref, 'master') }}        
+          - isMaster: false
+            os: [macos-latest , windows-latest]
+            python-minor-version: [7, 8]
 
     steps:
     - uses: actions/checkout@v3
