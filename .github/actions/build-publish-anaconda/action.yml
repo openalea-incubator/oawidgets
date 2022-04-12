@@ -74,10 +74,13 @@ runs:
         PYTHON_VERSION="3.${{ inputs.python }}"
         if [ ${PYTHON_VERSION}=="3.7" ]; then
           NUMPY_VERSION="1.11"
+          echo "Set numpy version to ${NUMPY_VERSION}"
         elif [ ${PYTHON_VERSION}=="3.8" ]; then
           NUMPY_VERSION="1.16"
+          echo "Set numpy version to ${NUMPY_VERSION}"
         elif [ ${PYTHON_VERSION}=="3.9" ]; then
           NUMPY_VERSION="1.19"
+          echo "Set numpy version to ${NUMPY_VERSION}"
         else
           echo "Unable to build the package with this version of python (yet). Please choose a subversion of Python3: 7, 8 or 9"
           exit 1
