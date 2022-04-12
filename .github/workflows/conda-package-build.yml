@@ -6,23 +6,38 @@ on:
   pull_request:
     branches: [ master ]
 
-
 jobs:
   build-and-publish:
     name: ${{ matrix.os }}, Python 3.${{ matrix.python-minor-version }} for conda deployment
     runs-on: ${{ matrix.os }}
     strategy:
+      fail-fast: false
       max-parallel: 3
       matrix:
         os: [ ubuntu-latest , macos-latest , windows-latest]
         python-minor-version: [7, 8, 9]
+        isMaster:
+          - ${{ contains(github.ref, 'master') }}
+        exclude:
+          - isMaster: false
+            os: [macos-latest , windows-latest]
+            python-minor-version: [7, 8]
 
     steps:
     - uses: actions/checkout@v3
+    - name: Determine publish
+      uses: haya14busa/action-cond@v1
+      id: publish
+      with:
+        cond: ${{ contains(github.ref, 'stable') || startsWith(github.ref, 'refs/heads/v') }}
+        if_true: 'true'
+        if_false: 'false'
     - name: Build and Publish
-      uses: openalea/action-build-publish-anaconda@0.1.0
+      uses: .github/actions/action-build-publish-anaconda.yml
       with:
         conda: conda
         python: ${{ matrix.python-minor-version }}
         channels: openalea3, conda-forge
         token: ${{ secrets.ANACONDA_TOKEN }}
+        publish: ${{ steps.publish.outputs.value }}
+        label: main
