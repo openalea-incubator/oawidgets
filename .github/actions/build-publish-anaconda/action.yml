@@ -72,11 +72,11 @@ runs:
         echo "::group::Conda packages building"
         echo "Associate numpy version to python version provided"
         PYTHON_VERSION="3.${{ inputs.python }}"
-        if [ ${PYTHON_VERSION="3.7"} ]; then
+        if [ ${PYTHON_VERSION}=="3.7" ]; then
           NUMPY_VERSION="1.11"
-        elif [ ${PYTHON_VERSION="3.8"} ]; then
+        elif [ ${PYTHON_VERSION}=="3.8" ]; then
           NUMPY_VERSION="1.16"
-        elif [ ${PYTHON_VERSION="3.9"} ]; then
+        elif [ ${PYTHON_VERSION}=="3.9" ]; then
           NUMPY_VERSION="1.19"
         else
           echo "Unable to build the package with this version of python (yet). Please choose a subversion of Python3: 7, 8 or 9"
