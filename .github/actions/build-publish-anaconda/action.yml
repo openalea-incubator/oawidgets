@@ -72,6 +72,7 @@ runs:
         echo "::group::Conda packages building"
         echo "Associate numpy version to python version provided"
         export PYTHON_VERSION="3.${{ inputs.python }}"
+        echo "Python version is ${PYTHON_VERSION}"
         if [ ${PYTHON_VERSION}=="3.7" ]; then
           export NUMPY_VERSION="1.11"
           echo "Set numpy version to ${NUMPY_VERSION}"
