@@ -28,7 +28,7 @@ setup_kwds = dict(
     packages=pkgs,
     package_dir={'': 'src'},
     entry_points={},
-    keywords='',
+    keywords='openalea, jupyter, widgets, MTG, lpy, plantgl, 3D',
     )
 # #}
 # change setup_kwds below before the next pkglts tag
