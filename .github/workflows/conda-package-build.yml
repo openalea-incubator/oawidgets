@@ -2,7 +2,10 @@ name: Building and publish package using anaconda
 
 on:
   push:
-    branches: [ master, dev_GH-actions ]
+    tags:
+      - 'v*'
+    branches: 
+      - '*'
   pull_request:
     branches: [ master ]
   workflow_dispatch: # allows you to trigger manually
@@ -24,7 +27,7 @@ jobs:
       uses: haya14busa/action-cond@v1
       id: publish
       with:
-        cond: ${{ contains(github.ref, 'stable') || startsWith(github.ref, 'refs/heads/v') }}
+        cond: ${{ startsWith(github.ref, 'refs/tags/v') }}
         if_true: 'true'
         if_false: 'false'
     - name: Build and Publish
