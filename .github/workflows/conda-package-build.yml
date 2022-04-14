@@ -5,6 +5,7 @@ on:
     branches: [ master, dev_GH-actions ]
   pull_request:
     branches: [ master ]
+  workflow_dispatch: # allows you to trigger manually
 
 jobs:
   build-and-publish:
