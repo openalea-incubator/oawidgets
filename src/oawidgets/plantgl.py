@@ -151,11 +151,11 @@ def group_meshes_by_color(scene):
     for k in k_to_pop:
         group_color.pop(k)
 
+    meshes_scene = [scene2mesh(objects)[0] for objects in group_color.values()]
     # only one curve element in group_color - so take that element to split its lines
     if curves:
         meshes_crv = [curve2mesh([obj]) for obj in list(curves.values())[0]]
-    meshes_scene = [scene2mesh(objects)[0] for objects in group_color.values()]
-    meshes_scene.extend(meshes_crv)
+        meshes_scene.extend(meshes_crv)
     return meshes_scene
 
 
