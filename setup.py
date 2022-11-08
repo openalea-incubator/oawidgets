@@ -16,7 +16,7 @@ pkgs = find_packages('src')
 
 setup_kwds = dict(
     name='oawidgets',
-    version="1.0.0",
+    version="1.0.1",
     description=short_descr,
     long_description=readme + '\n\n' + history,
     author="Baptiste Brument, Christophe Pradal",
