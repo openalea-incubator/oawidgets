@@ -10,6 +10,11 @@ oawidgets
     :target: https://oawidgets.readthedocs.io/en/latest/?badge=latest
 .. #}
 
+.. image:: https://anaconda.org/openalea3/oawidgets/badges/version.svg   
+    :target: https://anaconda.org/openalea3/oawidgets
+    
+.. image:: https://anaconda.org/openalea3/oawidgets/badges/downloads.svg
+    :target: https://anaconda.org/openalea3/oawidgets
 ------------
 Installation
 ------------
