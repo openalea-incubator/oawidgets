@@ -81,12 +81,11 @@ def scene2mesh(scene, property=None):
     colordict={}
     count=-1
     offset=0
-    curves = []
-    texts =[]
+    curves, texts, meshes = [], [], []
     for obj in scene:
         if isinstance(obj.geometry, Text):
             pos = obj.geometry.position
-            texts.append(k3d.text(obj.geometry.string, [pos.x, pos.y, pos.z], label_box=False, color=0xdddddd))
+            texts.append(k3d.text(obj.geometry.string, [pos.x, pos.y, pos.z], label_box=False, color=0xaaaaaa))
             continue
         if obj.geometry.isACurve():
             curves.append(obj)
