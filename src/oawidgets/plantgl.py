@@ -5,7 +5,6 @@
 from __future__ import absolute_import
 
 from openalea.plantgl.all import *
-from random import randint
 import matplotlib
 import numpy as np
 import k3d
@@ -83,7 +82,12 @@ def scene2mesh(scene, property=None):
     count=-1
     offset=0
     curves = []
+    texts =[]
     for obj in scene:
+        if isinstance(obj.geometry, Text):
+            pos = obj.geometry.position
+            texts.append(k3d.text(obj.geometry.string, [pos.x, pos.y, pos.z], label_box=False, color=0xdddddd))
+            continue
         if obj.geometry.isACurve():
             curves.append(obj)
             continue
@@ -127,6 +131,8 @@ def scene2mesh(scene, property=None):
         meshes.extend([curve2mesh([crv]) for crv in curves])
         print("Display %d curves"%len(curves))
 
+    if texts:
+        meshes.extend(texts)
     return meshes
 
 
