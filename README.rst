@@ -21,14 +21,8 @@ Installation
 
 Install the following packages::
 
-    conda install -c openalea3 -c conda-forge oawidgets
+    mamba install -c openalea3 -c conda-forge oawidgets
 
 If you want to use the lpy extension, install also lpy::
 
-    conda install -c openalea3 -c conda-forge oawidgets openalea.lpy
-
-
-
-
-
-
+    mamba install -c openalea3 -c conda-forge oawidgets openalea.lpy
