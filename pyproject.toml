@@ -9,8 +9,7 @@ authors = [
   { name = "Christophe Pradal"},
 ]
 description = "OpenAlea Widgets for Jupyter"
-license = "CeCILL-C"
-license-files = ["LICENSE"]
+license = {file = "LICENSE"}
 keywords = ["openalea", "jupyter", "widgets", "MTG", "lpy", "plantgl", "3D"]
 requires-python = ">=3.8"
 classifiers = [
