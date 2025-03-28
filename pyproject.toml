@@ -1,0 +1,68 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "oawidgets"
+authors = [
+  { name = "Baptiste Brument"},
+  { name = "Christophe Pradal"},
+]
+description = "OpenAlea Widgets for Jupyter"
+license = {file = "LICENSE"}
+keywords = ["openalea", "jupyter", "widgets", "MTG", "lpy", "plantgl", "3D"]
+requires-python = ">=3.8"
+classifiers = [
+  "Intended Audience :: Science/Research",
+  "Intended Audience :: Developers",
+  "License :: OSI Approved :: CeCILL-C License",
+  "Operating System :: OS Independent",
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3 :: Only",
+  "Programming Language :: Python :: 3.8",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Topic :: Scientific/Engineering",
+]
+dynamic = ["version", "readme"]
+dependencies = [
+  "ipython",
+  "k3d",
+  "pyvis",
+  "matplotlib",
+]
+
+[project.optional-dependencies]
+test = ["pytest"]
+doc = [
+  "pydata-sphinx-theme",
+  "myst-parser",
+  "openalea.phenomenal",
+  "sphinx-favicon",
+  "ipykernel",
+  "ipython_genutils",
+  "nbsphinx",
+]
+
+[project.urls]
+Homepage = "https://openalea.readthedocs.io/"
+"Bug Tracker" = "https://github.com/openalea-incubator/oawidgets/issues"
+Discussions = "https://github.com/openalea-incubator/oawidgets/discussions"
+Changelog = "https://github.com/openalea-incubator/oawidgets/releases"
+
+[project.entry-points."wralea"]
+"openalea.phenomenal" = "openalea.phenomenal_wralea"
+
+[tool.setuptools.dynamic]
+version = {attr = "oawidgets.__version__"}
+readme = {file = ["README.md"]}
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["openalea.*"]
+
+[tool.setuptools.package-data]
+"*" = ["*.so", "*.dylib", "*.dll", "*.pyx","*.cpp","*.c","*.h"]
