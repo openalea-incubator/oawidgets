@@ -1,19 +1,46 @@
-==========
-Gallery
-==========
+======================================================
+Welcome to openalea.deepberry's documentation!
+======================================================
 
-.. figure:: ./images/sphere.png
-   :width: 30%
-   :target: https://nbviewer.jupyter.org/github/openalea-incubator/oawidgets/tree/master/example/sphere.ipynb
-  
-   3D-Visualisation of a Sphere
+.. sidebar:: Summary
 
-.. figure:: ./images/plantframe.png
-   :width: 30%
-   :target: https://nbviewer.jupyter.org/github/openalea-incubator/oawidgets/tree/master/example/plantframe.ipynb
- 
-   PlantFrame
+    :Version: |version|
+    :Release: |release|
+    :Date: |today|
+    :Author: See `Authors`_ section
+    :License: See `License`_ section
 
-.. figure:: ./images/lpymagic.png
-   :width: 30%
-   :target: https://nbviewer.jupyter.org/github/openalea-incubator/oawidgets/tree/master/example/lpymagic.ipynb
+.. toctree::
+   :maxdepth: 1
+
+   Home <self>
+   readme
+   usage
+   authors
+
+
+
+.. seealso::
+
+   More documentation on OpenAlea can be found on the
+   `OpenAlea <https://openalea.readthedocs.io>`__ website.
+
+Authors
+=======
+
+.. include:: ../AUTHORS.rst
+
+License
+=======
+
+oawidgets is released under a Cecill-C License.
+
+.. note:: `Cecill-C <http://www.cecill.info/licences/Licence_CeCILL-C_V1-en.html>`_
+    license is a LGPL compatible license.
+
+Indices and tables
+==================
+
+* :ref:`genindex`
+* :ref:`modindex`
+* :ref:`search`

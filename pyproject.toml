@@ -40,7 +40,6 @@ test = ["pytest"]
 doc = [
   "pydata-sphinx-theme",
   "myst-parser",
-  "openalea.phenomenal",
   "sphinx-favicon",
   "ipykernel",
   "ipython_genutils",

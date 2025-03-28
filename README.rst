@@ -15,6 +15,7 @@ oawidgets
     
 .. image:: https://anaconda.org/openalea3/oawidgets/badges/downloads.svg
     :target: https://anaconda.org/openalea3/oawidgets
+
 ------------
 Installation
 ------------
