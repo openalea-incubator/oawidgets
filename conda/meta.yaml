@@ -40,6 +40,6 @@ requirements:
       - matplotlib
 
 about:
-  home: {{ version }}
+  home: {{ home }}
   license: CeCILL_C
-  summary: {{ home }}
+  summary: {{ description }}
