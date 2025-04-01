@@ -13,7 +13,7 @@ import six
 from six.moves import zip
 
 
-def tomesh(geometry, d=None):
+def tomesh(geometry, d=None, side='front'):
     """Return a mesh from a geometry object"""
     isCurve = False
     if geometry.isACurve():
@@ -30,7 +30,7 @@ def tomesh(geometry, d=None):
     else:
         idl = [tuple(index) for index in list(d.discretization.indexList)]
         pts = [(pt.x, pt.y, pt.z) for pt in list(d.discretization.pointList)]
-        mesh = k3d.mesh(vertices=pts, indices=idl)
+        mesh = k3d.mesh(vertices=pts, indices=idl, side=side)
     return mesh
 
 def curve2mesh(crv, property=None):
@@ -74,7 +74,7 @@ def curve2mesh(crv, property=None):
 
     return mesh
 
-def scene2mesh(scene, property=None):
+def scene2mesh(scene, property=None, side='front'):
     """Return a mesh from a scene"""
     d = Tesselator()
     indices, vertices, colors, attribute=[], [], [], []
@@ -106,10 +106,10 @@ def scene2mesh(scene, property=None):
     colors=np.array(list(colordict.keys()))/255.
     if property is not None:
         property = np.repeat(np.array(property), [3]*len(property))
-        mesh = k3d.mesh(vertices=vertices, indices=indices, attribute=property, color_map=k3d.basic_color_maps.Jet, color_range=[min(property), max(property)])
+        mesh = k3d.mesh(vertices=vertices, indices=indices, attribute=property, color_map=k3d.basic_color_maps.Jet, color_range=[min(property), max(property)], side=side)
     elif len(colors) == 1:
         colorhex = int(matplotlib.colors.rgb2hex(colors[0])[1:], 16)
-        mesh = k3d.mesh(vertices=vertices, indices=indices)
+        mesh = k3d.mesh(vertices=vertices, indices=indices, side=side)
         mesh.color=colorhex
     else:
         color_map = list(zip(list(np.array(list(colordict.values())) /
@@ -123,7 +123,8 @@ def scene2mesh(scene, property=None):
         mesh = k3d.mesh(vertices=vertices,
                         indices=indices,
                         attribute=attribute,
-                        color_map=color_map)
+                        color_map=color_map,
+                        side=side)
 
     meshes = [mesh]
     if curves:
@@ -135,7 +136,7 @@ def scene2mesh(scene, property=None):
     return meshes
 
 
-def group_meshes_by_color(scene):
+def group_meshes_by_color(scene, side='front'):
     """ Create one mesh by objects sharing the same color.
     """
 
@@ -156,7 +157,7 @@ def group_meshes_by_color(scene):
     for k in k_to_pop:
         group_color.pop(k)
 
-    meshes_scene = [scene2mesh(objects)[0] for objects in group_color.values()]
+    meshes_scene = [scene2mesh(objects, side=side)[0] for objects in group_color.values()]
     # only one curve element in group_color - so take that element to split its lines
     if curves:
         meshes_crv = [curve2mesh([obj]) for obj in list(curves.values())[0]]
@@ -164,25 +165,25 @@ def group_meshes_by_color(scene):
     return meshes_scene
 
 
-def PlantGL(pglobject, plot=None, group_by_color=True, property=None):
+def PlantGL(pglobject, plot=None, group_by_color=True, property=None, side='front'):
     """Return a k3d plot from PlantGL shape, geometry and scene objects"""
     if plot is None:
         plot = k3d.plot()
 
     if isinstance(pglobject, Geometry):
-        mesh = tomesh(pglobject)
+        mesh = tomesh(pglobject, side=side)
         plot += mesh
     elif isinstance(pglobject, Shape):
-        mesh = tomesh(pglobject.geometry)
+        mesh = tomesh(pglobject.geometry, side=side)
         mesh.color = pglobject.appearance.ambient.toUint()
         plot += mesh
     elif isinstance(pglobject, Scene):
         if group_by_color:
-            meshes = group_meshes_by_color(pglobject)
+            meshes = group_meshes_by_color(pglobject, side=side)
             for mesh in meshes:
                 plot += mesh
         else:
-            meshes = scene2mesh(pglobject, property)
+            meshes = scene2mesh(pglobject, property, side=side)
             for mesh in meshes:
                 plot += mesh
 
@@ -192,7 +193,7 @@ def PlantGL(pglobject, plot=None, group_by_color=True, property=None):
 
 
 def mtg2mesh(g, property_name):
-    """Return a mesh from a MTG object depending on a specific property"""
+    """Return a mesh from an MTG object depending on a specific property"""
     d = Tesselator()
     geometry = g.property('geometry')
     prop = g.property(property_name)
@@ -217,7 +218,7 @@ def mtg2mesh(g, property_name):
 
 
 def MTG(g, property_name, plot=None):
-    """Return a plot from a MTG object"""
+    """Return a plot from an MTG object"""
     if plot is None:
         plot = k3d.plot()
 
