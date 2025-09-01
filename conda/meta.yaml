@@ -7,6 +7,7 @@
 {% set build_deps = pyproject.get("build-system", {}).get("requires", []) %}
 {% set deps = pyproject.get('project', {}).get('dependencies', []) %}
 {% set conda_deps = pyproject.get('tool', {}).get('conda', {}).get('environment', {}).get('dependencies',[]) %}
+{% set test_deps = pyproject.get('project', {}).get('optional-dependencies', {}).get('test',[]) %}
 
 package:
   name: {{ name }}
@@ -41,12 +42,9 @@ requirements:
 
 test:
   requires:
-    - pytest
-    - openalea.lpy
-    - openalea.plantgl
-    - openalea.mtg
-    - pathlib
-    - IPython
+    {% for dep in test_deps %}
+    - {{ dep }}
+    {% endfor %}
   imports:
     - oawidgets
   source_files:

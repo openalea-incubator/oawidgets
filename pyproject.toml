@@ -51,6 +51,8 @@ dependencies = [
 test = [
   "pytest",
   "nbmake",
+  "pathlib",
+  "IPython",
 ]
 dev = [
   "pytest >=6",
@@ -75,6 +77,8 @@ channels = [
 ]
 dependencies = [
     "openalea.mtg",
+    "openalea.plantgl",
+    "openalea.lpy",
 ]
 
 [project.urls]
