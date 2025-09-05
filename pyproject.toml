@@ -14,6 +14,10 @@ include-package-data = false # force explicit declaration of data (disable autom
 
 # enable dynamic version based on git tags
 [tool.setuptools_scm]
+# Format version to ease alignment with conda/meta.yaml tag-based versioning
+fallback_version = "1.0.5.dev0"
+version_scheme = "guess-next-dev"
+local_scheme = "no-local-version"
 
 [project]
 name = "oawidgets"
@@ -38,6 +42,7 @@ classifiers = [
   "Programming Language :: Python :: 3.10",
   "Programming Language :: Python :: 3.11",
   "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
   "Topic :: Scientific/Engineering",
 ]
 dependencies = [
