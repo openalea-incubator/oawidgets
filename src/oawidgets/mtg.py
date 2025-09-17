@@ -127,5 +127,12 @@ def plot(g, properties=None, selection=None, hlayout=True, scale=None, labels=No
     #name = f"mtg_{uid}.html"
     name = 'mtg.html'
 
-    return G.show(name)
+    return patch_show(G, name=name)
+
+def patch_show(G, name='mtg.html'):
+    """ Function to solve an error on windows about encoding """
+    html = G.generate_html(notebook=True)
+    with open(name, mode='w+', encoding='utf-8') as fp:
+        fp.write(html)
+    return IFrame(name, width=G.width, height=G.height)
 
