@@ -49,7 +49,7 @@ dependencies = [
   "ipython",
   "k3d",
   "pyvis",
-  "matplotlib",
+  "matplotlib-base",
 ]
 
 [project.optional-dependencies]
