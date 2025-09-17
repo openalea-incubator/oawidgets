@@ -3,7 +3,7 @@ from __future__ import absolute_import
 import uuid
 
 from openalea.mtg import traversal
-from pyvis.network import Network
+from pyvis.network import Network, IFrame
 
 try:
     import colorcet as cc
