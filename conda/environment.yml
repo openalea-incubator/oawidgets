@@ -1,5 +1,7 @@
 name: oawidgets_dev
 channels:
+  - openalea3/label/dev
+  - openalea3/label/rc
   - openalea3
   - conda-forge
 dependencies:
@@ -10,7 +12,7 @@ dependencies:
   - openalea.hydroshoot
   - k3d
   - pyvis
-  - matplotlib
+  - matplotlib-base
   - pip
   - pip:
       - -e .."[doc, test]"
