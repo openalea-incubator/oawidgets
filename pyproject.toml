@@ -49,7 +49,6 @@ dependencies = [
   "ipython",
   "k3d",
   "pyvis",
-  "matplotlib-base",
 ]
 
 [project.optional-dependencies]
@@ -84,6 +83,7 @@ dependencies = [
     "openalea.mtg",
     "openalea.plantgl",
     "openalea.lpy",
+    "matplotlib-base",
 ]
 
 [project.urls]
