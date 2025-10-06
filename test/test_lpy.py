@@ -10,9 +10,9 @@ def session_ip():
 
 @pytest.fixture(scope="function")
 def ip(session_ip):
-    session_ip.run_line_magic(magic_name="load_ext", line="oawidgets.lpymagic")
+    session_ip.run_line_magic(magic_name="load_ext", line="openalea.oawidgets.lpymagic")
     yield session_ip
-    session_ip.run_line_magic(magic_name="unload_ext", line="oawidgets.lpymagic")
+    session_ip.run_line_magic(magic_name="unload_ext", line="openalea.oawidgets.lpymagic")
     session_ip.run_line_magic(magic_name="reset", line="-f")
 
 

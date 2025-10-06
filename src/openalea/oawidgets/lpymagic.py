@@ -533,7 +533,7 @@ __doc__ = __doc__.format(
 def load_ipython_extension(ip):
     """
     Any module file that define a function named `load_ipython_extension`
-    can be loaded via `%load_ext oawidgets.lpymagic` or be configured to be
+    can be loaded via `%load_ext openalea.oawidgets.lpymagic` or be configured to be
     autoloaded by IPython at startup time.
     """
     ip.register_magics(LpyMagics)
