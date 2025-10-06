@@ -19,7 +19,7 @@ def ip(session_ip):
 def test_lpy(ip):
     ip.run_cell(
         raw_cell="""
-    from openalea.widgets import lpymagic, plantgl
+    from openalea.oawidgets import lpymagic, plantgl
     from random import *
     p1 = 0.550000 
     p2 = 0.450000

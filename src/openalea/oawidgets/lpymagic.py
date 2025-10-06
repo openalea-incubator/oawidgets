@@ -52,7 +52,7 @@ from IPython.utils.py3compat import unicode_to_str
 from openalea.mtg import MTG
 from openalea.mtg.io import mtg2lpy, lpy2mtg
 
-from openalea.widgets import plantgl
+from openalea.oawidgets import plantgl
 
 _mimetypes = {'png' : 'image/png',
              'svg' : 'image/svg+xml',
