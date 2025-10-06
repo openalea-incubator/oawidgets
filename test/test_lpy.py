@@ -10,16 +10,16 @@ def session_ip():
 
 @pytest.fixture(scope="function")
 def ip(session_ip):
-    session_ip.run_line_magic(magic_name="load_ext", line="oawidgets.lpymagic")
+    session_ip.run_line_magic(magic_name="load_ext", line="openalea.oawidgets.lpymagic")
     yield session_ip
-    session_ip.run_line_magic(magic_name="unload_ext", line="oawidgets.lpymagic")
+    session_ip.run_line_magic(magic_name="unload_ext", line="openalea.oawidgets.lpymagic")
     session_ip.run_line_magic(magic_name="reset", line="-f")
 
 
 def test_lpy(ip):
     ip.run_cell(
         raw_cell="""
-    from oawidgets import lpymagic, plantgl
+    from openalea.oawidgets import lpymagic, plantgl
     from random import *
     p1 = 0.550000 
     p2 = 0.450000

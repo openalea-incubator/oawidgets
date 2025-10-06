@@ -42,7 +42,7 @@ test:
     - {{ dep }}
     {% endfor %}
   imports:
-    - oawidgets
+    - openalea.oawidgets
   source_files:
     - test/**
   commands:

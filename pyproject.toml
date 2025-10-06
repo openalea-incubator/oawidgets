@@ -20,7 +20,7 @@ version_scheme = "guess-next-dev"
 local_scheme = "no-local-version"
 
 [project]
-name = "oawidgets"
+name = "openalea.oawidgets"
 authors = [
   { name = "Baptiste Brument"},
   { name = "Christophe Pradal"},
@@ -88,7 +88,7 @@ dependencies = [
 
 [project.urls]
 Homepage = "https://oawidgets.readthedocs.io/"
-"Bug Tracker" = "https://github.com/openalea-incubator/oawidgets/issues"
-Discussions = "https://github.com/openalea-incubator/oawidgets/discussions"
-Changelog = "https://github.com/openalea-incubator/oawidgets/releases"
+"Bug Tracker" = "https://github.com/openalea/oawidgets/issues"
+Discussions = "https://github.com/openalea/oawidgets/discussions"
+Changelog = "https://github.com/openalea/oawidgets/releases"
 

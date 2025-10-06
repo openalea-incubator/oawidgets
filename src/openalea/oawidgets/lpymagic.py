@@ -52,7 +52,7 @@ from IPython.utils.py3compat import unicode_to_str
 from openalea.mtg import MTG
 from openalea.mtg.io import mtg2lpy, lpy2mtg
 
-from oawidgets import plantgl
+from openalea.oawidgets import plantgl
 
 _mimetypes = {'png' : 'image/png',
              'svg' : 'image/svg+xml',
@@ -533,7 +533,7 @@ __doc__ = __doc__.format(
 def load_ipython_extension(ip):
     """
     Any module file that define a function named `load_ipython_extension`
-    can be loaded via `%load_ext oawidgets.lpymagic` or be configured to be
+    can be loaded via `%load_ext openalea.oawidgets.lpymagic` or be configured to be
     autoloaded by IPython at startup time.
     """
     ip.register_magics(LpyMagics)

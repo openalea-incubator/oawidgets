@@ -16,13 +16,13 @@ Oawidgets is a set of OpenAlea widgets for jupyter notebooks allowing to:
 Install the following packages
 
 ```bash
-mamba install -c openalea3 -c conda-forge oawidgets
+mamba install -c openalea3 -c conda-forge openalea.oawidgets
 ```
 
 If you want to use the lpy extension, install also lpy
 
 ```bash
-mamba install -c openalea3 -c conda-forge oawidgets openalea.lpy
+mamba install -c openalea3 -c conda-forge openalea.oawidgets openalea.lpy
 ```
 
 ### Usage :

@@ -1,5 +1,5 @@
 from openalea.mtg import MTG
-from oawidgets.mtg import plot
+from openalea.oawidgets.mtg import plot
 import pathlib
 
 data = pathlib.Path(__file__).parent.resolve() / "data"
