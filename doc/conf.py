@@ -128,6 +128,7 @@ nbsphinx_thumbnails = {
     'examples/sphere': '_static/sphere.png',
     'examples/hydroshoot_tutorial/hydroshoot_grapevine': '_static/hydroshoot.png',
 }
+nbsphinx_allow_errors = True
 
 # Add infomation about github repository
 html_context = {
