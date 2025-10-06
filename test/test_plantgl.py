@@ -1,6 +1,6 @@
 import openalea.plantgl.all as pgl
-from oawidgets.plantgl import PlantGL
-from oawidgets.plantgl import MTG as MTGPlantGL
+from openalea.widgets.plantgl import PlantGL
+from openalea.widgets.plantgl import MTG as MTGPlantGL
 from openalea.mtg import MTG
 
 import pathlib
