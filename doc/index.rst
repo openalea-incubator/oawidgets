@@ -1,5 +1,5 @@
 ======================================================
-Welcome to oawidgets's documentation!
+Welcome to openalea.widgets's documentation!
 ======================================================
 
 .. sidebar:: Summary
