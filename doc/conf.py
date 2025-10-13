@@ -143,7 +143,7 @@ html_context = {
 latex_elements = {
 }
 latex_documents = [
-    (master_doc, 'oawidgets.tex', u'oawidgets Documentation',
+    (master_doc, 'widgets.tex', u'widgets Documentation',
      u'INRA / INRIA / CIRAD', 'manual'),
 ]
 
