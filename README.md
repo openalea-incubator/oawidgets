@@ -1,11 +1,11 @@
-# oawidgets
+# widgets
 
 ![Documentation status](https://readthedocs.org/projects/oawidgets/badge/?version=latest)
-[![Version](https://anaconda.org/openalea3/oawidgets/badges/version.svg)](https://anaconda.org/openalea3/oawidgets)
-[![Downloads](https://anaconda.org/openalea3/oawidgets/badges/downloads.svg)](https://anaconda.org/openalea3/oawidgets)
+[![Version](https://anaconda.org/openalea3/widgets/badges/version.svg)](https://anaconda.org/openalea3/widgets)
+[![Downloads](https://anaconda.org/openalea3/widgets/badges/downloads.svg)](https://anaconda.org/openalea3/widgets)
 
 
-Oawidgets is a set of OpenAlea widgets for jupyter notebooks allowing to: 
+widgets is a set of OpenAlea widgets for jupyter notebooks allowing to: 
 - use a magic to use [LPy](https://lpy.readthedocs.io) language
 - display interactive 3D plant architectures, using [openalea.plantgl](https://github.com/openalea/plantgl)
 - display [MTG](https://mtg.readthedocs.io) to explore for instance class and number of vertices, number of scales, properties, using [Pyvis](https://pyvis.readthedocs.io)
@@ -16,13 +16,13 @@ Oawidgets is a set of OpenAlea widgets for jupyter notebooks allowing to:
 Install the following packages
 
 ```bash
-mamba install -c openalea3 -c conda-forge openalea.oawidgets
+mamba install -c openalea3 -c conda-forge openalea.widgets
 ```
 
 If you want to use the lpy extension, install also lpy
 
 ```bash
-mamba install -c openalea3 -c conda-forge openalea.oawidgets openalea.lpy
+mamba install -c openalea3 -c conda-forge openalea.widgets openalea.lpy
 ```
 
 ### Usage :

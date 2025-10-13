@@ -20,7 +20,7 @@ version_scheme = "guess-next-dev"
 local_scheme = "no-local-version"
 
 [project]
-name = "openalea.oawidgets"
+name = "openalea.widgets"
 authors = [
   { name = "Baptiste Brument"},
   { name = "Christophe Pradal"},
