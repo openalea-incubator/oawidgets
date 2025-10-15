@@ -212,6 +212,25 @@ def PlantGL(pglobject, plot=None, group_by_color=True, property=None, side='fron
     #plot.colorbar_object_id = randint(0, 1000)
     return plot
 
+def PlantGL_Mesh(pglobject, plot=None, group_by_color=True, property=None, side='front'):
+    """Return a list of k3d Mesh from PlantGL shape, geometry and scene objects"""
+    meshes = []
+    if isinstance(pglobject, Geometry):
+        mesh = tomesh(pglobject, side=side)
+        meshes.append(mesh)
+    elif isinstance(pglobject, Shape):
+        mesh = tomesh(pglobject.geometry, side=side)
+        mesh.color = pglobject.appearance.ambient.toUint()
+        meshes.append(mesh)
+    elif isinstance(pglobject, Scene):
+        if group_by_color:
+            meshes = group_meshes_by_color(pglobject, side=side)
+        else:
+            meshes = scene2mesh(pglobject, property, side=side)
+
+    #plot.colorbar_object_id = randint(0, 1000)
+    return meshes
+
 
 def mtg2mesh(g, property_name):
     """Return a mesh from an MTG object depending on a specific property"""
