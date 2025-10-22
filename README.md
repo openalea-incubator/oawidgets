@@ -1,8 +1,10 @@
 # widgets
 
-![Documentation status](https://readthedocs.org/projects/oawidgets/badge/?version=latest)
-[![Version](https://anaconda.org/openalea3/widgets/badges/version.svg)](https://anaconda.org/openalea3/widgets)
-[![Downloads](https://anaconda.org/openalea3/widgets/badges/downloads.svg)](https://anaconda.org/openalea3/widgets)
+[![Docs](https://readthedocs.org/projects/oawidgets/badge/?version=latest)](https://oawidgets.readthedocs.io/)
+[![Build Status](https://github.com/openalea/oawidgets/actions/workflows/conda-package-build.yml/badge.svg?branch=master)](https://github.com/openalea/oawidgets/actions/workflows/conda-package-build.yml?query=branch%3Amaster)
+[![Python Version](https://img.shields.io/badge/python-3.8%20%7C%203.9%20%7C%203.10%20%7C%203.11%20%7C%203.12-blue)](https://www.python.org/downloads/)
+[![License](https://img.shields.io/badge/License--CeCILL-C-blue)](https://www.cecill.info/licences/Licence_CeCILL-C_V1-en.html)
+[![Anaconda-Server Badge](https://anaconda.org/openalea3/openalea.widgets/badges/version.svg)](https://anaconda.org/openalea3/openalea.widgets)
 
 
 widgets is a set of OpenAlea widgets for jupyter notebooks allowing to: 
@@ -12,8 +14,6 @@ widgets is a set of OpenAlea widgets for jupyter notebooks allowing to:
 
 
 ## Installation
-
-Install the following packages
 
 ```bash
 mamba install -c openalea3 -c conda-forge openalea.widgets
