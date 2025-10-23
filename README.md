@@ -1,7 +1,7 @@
 # widgets
 
 [![Docs](https://readthedocs.org/projects/oawidgets/badge/?version=latest)](https://oawidgets.readthedocs.io/)
-[![Build Status](https://github.com/openalea/oawidgets/actions/workflows/openalea_ci.yml/badge.svg)](https://github.com/openalea/oawidgets/actions/workflows/conda-package-build.yml?query=branch%3Amaster)
+[![Build Status](https://github.com/openalea/oawidgets/actions/workflows/openalea_ci.yml/badge.svg)](https://github.com/openalea/oawidgets/actions/workflows/openalea_ci.yml?query=branch%3Amaster)
 [![Python Version](https://img.shields.io/badge/python-3.8%20%7C%203.9%20%7C%203.10%20%7C%203.11%20%7C%203.12-blue)](https://www.python.org/downloads/)
 [![License](https://img.shields.io/badge/License--CeCILL-C-blue)](https://www.cecill.info/licences/Licence_CeCILL-C_V1-en.html)
 [![Anaconda-Server Badge](https://anaconda.org/openalea3/openalea.widgets/badges/version.svg)](https://anaconda.org/openalea3/openalea.widgets)
