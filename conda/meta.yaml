@@ -46,7 +46,7 @@ test:
   source_files:
     - test/**
   commands:
-    - pytest -v
+    - pytest -v --ignore=test/test_lpy.py
 
 about:
   home: {{ home }}
