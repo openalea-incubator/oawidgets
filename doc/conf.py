@@ -5,7 +5,7 @@ import os
 import pydata_sphinx_theme # Pydata theme: https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html
 
 from importlib.metadata import metadata
-project='oawidgets'
+project='widgets'
 meta = metadata('openalea.' + project)
 release = meta.get("version")
 # for example take major/minor
