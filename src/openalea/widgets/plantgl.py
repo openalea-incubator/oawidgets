@@ -13,20 +13,20 @@ import six
 from six.moves import zip
 
 
-def tomesh(object, d=None, side='front'):
+def tomesh(obj, d=None, side='front'):
     """Return a mesh from a geometry object or scene"""
     isCurve = False
 
-    if isinstance(object, Scene):
-        return group_meshes_by_color(object, side=side)
+    if isinstance(obj, Scene):
+        return group_meshes_by_color(obj, side=side)
 
-    if object.isACurve():
+    if obj.isACurve():
         isCurve = True
     
     if d is None:
         d = Tesselator() if not isCurve else Discretizer()
 
-    object.apply(d)
+    obj.apply(d)
 
     if isCurve:
         pts = [(pt.x, pt.y, pt.z) for pt in list(d.result.pointList)]
