@@ -13,16 +13,20 @@ import six
 from six.moves import zip
 
 
-def tomesh(geometry, d=None, side='front'):
-    """Return a mesh from a geometry object"""
+def tomesh(object, d=None, side='front'):
+    """Return a mesh from a geometry object or scene"""
     isCurve = False
-    if geometry.isACurve():
+
+    if isinstance(object, Scene):
+        return group_meshes_by_color(object, side=side)
+
+    if object.isACurve():
         isCurve = True
     
     if d is None:
         d = Tesselator() if not isCurve else Discretizer()
 
-    geometry.apply(d)
+    object.apply(d)
 
     if isCurve:
         pts = [(pt.x, pt.y, pt.z) for pt in list(d.result.pointList)]
@@ -68,7 +72,6 @@ def curve2mesh(crv, property=None):
                         colors[:,1],
                         colors[:,2]))
         color_map.sort()
-        #color_map=k3d.basic_color_maps.Jet
         attribute = list(np.array(attribute)/float(max(attribute)))
         mesh = k3d.line(vertices, shader='mesh', attribute=attribute, color_map=color_map)
 
@@ -211,25 +214,6 @@ def PlantGL(pglobject, plot=None, group_by_color=True, property=None, side='fron
     plot.lighting = 3
     #plot.colorbar_object_id = randint(0, 1000)
     return plot
-
-def PlantGL_Mesh(pglobject, plot=None, group_by_color=True, property=None, side='front'):
-    """Return a list of k3d Mesh from PlantGL shape, geometry and scene objects"""
-    meshes = []
-    if isinstance(pglobject, Geometry):
-        mesh = tomesh(pglobject, side=side)
-        meshes.append(mesh)
-    elif isinstance(pglobject, Shape):
-        mesh = tomesh(pglobject.geometry, side=side)
-        mesh.color = pglobject.appearance.ambient.toUint()
-        meshes.append(mesh)
-    elif isinstance(pglobject, Scene):
-        if group_by_color:
-            meshes = group_meshes_by_color(pglobject, side=side)
-        else:
-            meshes = scene2mesh(pglobject, property, side=side)
-
-    #plot.colorbar_object_id = randint(0, 1000)
-    return meshes
 
 
 def mtg2mesh(g, property_name):
