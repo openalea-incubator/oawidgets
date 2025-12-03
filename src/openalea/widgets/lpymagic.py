@@ -48,7 +48,6 @@ from IPython.core.magic_arguments import (
 )
 from IPython.display import display
 from IPython.testing.skipdoctest import skip_doctest
-from IPython.utils.py3compat import unicode_to_str
 from openalea.mtg import MTG
 from openalea.mtg.io import mtg2lpy, lpy2mtg
 
@@ -114,7 +113,7 @@ class LpyMagics(Magics):
 
         """
         axiom = line
-        axiom = unicode_to_str(axiom)
+        axiom = str(axiom)
         self._lsys.axiom = axiom
 
 
@@ -130,7 +129,7 @@ class LpyMagics(Magics):
             In [3]: %%lpy -n 10
 
         """
-        rule = unicode_to_str(line)
+        rule = str(line)
         self._lsys.addRule(rule)
 
 
@@ -235,7 +234,7 @@ class LpyMagics(Magics):
             return_output = False
 
         code = ' '.join(args.code) + code
-        code = unicode_to_str(code)
+        code = str(code)
 
 
         # if there is no local namespace then default to an empty dict
@@ -246,7 +245,7 @@ class LpyMagics(Magics):
         parameters = {}
         if args.input:
             for input in ','.join(args.input).split(','):
-                input = unicode_to_str(input)
+                input = str(input)
                 if input =='*':
                     parameters.update(self.shell.user_ns)
                 else:
@@ -268,7 +267,7 @@ class LpyMagics(Magics):
         workstring = ''
         if args.workstring:
             workstring = args.workstring[0]
-            workstring = unicode_to_str(workstring)
+            workstring = str(workstring)
             try:
                 workstring = local_ns[workstring]
             except KeyError:
@@ -310,7 +309,7 @@ class LpyMagics(Magics):
         tree = self._lsys.iterate(workstring,c_iter,n)
 
         if args.axialtree:
-            axial_name = unicode_to_str(args.axialtree[0])
+            axial_name = str(args.axialtree[0])
             self.shell.push({axial_name: tree})
 
 
@@ -320,7 +319,7 @@ class LpyMagics(Magics):
 
         mtg = None
         if args.mtg:
-            mtg_name = unicode_to_str(args.mtg[0])
+            mtg_name = str(args.mtg[0])
             mtg = lpy2mtg(tree, self._lsys, scene=scene)
             self.shell.push({mtg_name: mtg})
 
@@ -349,7 +348,7 @@ class LpyMagics(Magics):
             """
             if args.output:
                 for output in ','.join(args.output).split(','):
-                    output = unicode_to_str(output)
+                    output = str(output)
                     self.shell.push({output: self._oct.get(output)})
             """
             #for source, data in display_data:
@@ -450,7 +449,7 @@ class LpyMagics(Magics):
         workstring = self._lsys.axiom
         if args.workstring:
             workstring = ','.join(args.workstring).split(',')[0]
-            workstring = unicode_to_str(workstring)
+            workstring = str(workstring)
 
             try:
                 ws = local_ns[workstring]
@@ -473,7 +472,7 @@ class LpyMagics(Magics):
         tree = self._lsys.iterate(workstring,n0,n)
 
         if args.axialtree:
-            axial_name = unicode_to_str(args.axialtree[0])
+            axial_name = str(args.axialtree[0])
             self.shell.push({axial_name: tree})
 
         scene = self._lsys.sceneInterpretation(tree)
@@ -482,7 +481,7 @@ class LpyMagics(Magics):
 
         g = None
         if args.mtg:
-            mtg_name = unicode_to_str(args.mtg[0])
+            mtg_name = str(args.mtg[0])
             g = lpy2mtg(tree, self._lsys, scene=scene)
             self.shell.push({mtg_name: g})
 
@@ -511,7 +510,7 @@ class LpyMagics(Magics):
         """
         if args.output:
             for output in ','.join(args.output).split(','):
-                output = unicode_to_str(output)
+                output = str(output)
                 self.shell.push({output: self._oct.get(output)})
         """
         for source, data in display_data:

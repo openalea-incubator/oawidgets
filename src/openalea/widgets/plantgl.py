@@ -13,16 +13,20 @@ import six
 from six.moves import zip
 
 
-def tomesh(geometry, d=None, side='front'):
-    """Return a mesh from a geometry object"""
+def tomesh(obj, d=None, side='front'):
+    """Return a mesh from a geometry object or scene"""
     isCurve = False
-    if geometry.isACurve():
+
+    if isinstance(obj, Scene):
+        return group_meshes_by_color(obj, side=side)
+
+    if obj.isACurve():
         isCurve = True
     
     if d is None:
         d = Tesselator() if not isCurve else Discretizer()
 
-    geometry.apply(d)
+    obj.apply(d)
 
     if isCurve:
         pts = [(pt.x, pt.y, pt.z) for pt in list(d.result.pointList)]
@@ -68,7 +72,6 @@ def curve2mesh(crv, property=None):
                         colors[:,1],
                         colors[:,2]))
         color_map.sort()
-        #color_map=k3d.basic_color_maps.Jet
         attribute = list(np.array(attribute)/float(max(attribute)))
         mesh = k3d.line(vertices, shader='mesh', attribute=attribute, color_map=color_map)
 
