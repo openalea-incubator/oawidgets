@@ -19,13 +19,14 @@ Welcome to openalea.widgets's documentation!
    authors
    license
 
-
-
 .. seealso::
 
    More documentation on OpenAlea can be found on the
    `OpenAlea <https://openalea.readthedocs.io>`__ website.
 
+Indices and tables
+==================
 
-
-
+* :ref:`genindex`
+* :ref:`modindex`
+* :ref:`search`
