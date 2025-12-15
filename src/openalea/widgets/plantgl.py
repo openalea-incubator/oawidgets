@@ -98,7 +98,7 @@ def scene2mesh(scene, property=None, side='front'):
         obj.geometry.apply(d)
         idl = np.array([tuple(index) for index in list(d.discretization.indexList)])+offset
         pts = [(pt.x, pt.y, pt.z) for pt in list(d.discretization.pointList)]
-        if len(d.discretization.colorList) > 0: # if a color list is defined, use it
+        if d.discretization.colorList: # if a color list is defined, use it
             col_list = d.discretization.colorList
             for col in col_list:
                 hex_val = (col.red << 16) | (col.green << 8) | col.blue # get the hex code of rgb color
