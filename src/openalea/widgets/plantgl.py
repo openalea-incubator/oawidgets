@@ -12,6 +12,9 @@ import k3d
 import six
 from six.moves import zip
 
+def rgb2hex(r,g,b):
+    """Convert an RGB value to an hex value"""
+    return (r << 16) | (g << 8) | b
 
 def tomesh(obj, d=None, side='front'):
     """Return a mesh from a geometry object or scene"""
@@ -80,7 +83,7 @@ def curve2mesh(crv, property=None):
 def scene2mesh(scene, property=None, side='front'):
     """Return a mesh from a scene"""
     d = Tesselator()
-    indices, vertices, colors, attribute=[], [], [], []
+    indices, vertices, colors, attribute, color_triangles = [], [], [], [], []
     colordict={}
     count=-1
     offset=0
@@ -98,7 +101,11 @@ def scene2mesh(scene, property=None, side='front'):
         obj.geometry.apply(d)
         idl = np.array([tuple(index) for index in list(d.discretization.indexList)])+offset
         pts = [(pt.x, pt.y, pt.z) for pt in list(d.discretization.pointList)]
-
+        if d.discretization.colorList: # if a color list is defined, use it
+            col_list = d.discretization.colorList
+            for col in col_list:
+                hex_val = rgb2hex(col.red, col.green, col.blue) # get the hex code of rgb color
+                color_triangles.append(hex_val)
         vertices.extend(pts)
         color = obj.appearance.ambient
         color = (color.red, color.green, color.blue)
@@ -116,6 +123,9 @@ def scene2mesh(scene, property=None, side='front'):
                         color_map=k3d.basic_color_maps.Jet,
                         color_range=[min(property), max(property)],
                         side=side, opacity=opacity)
+    if len(color_triangles) > 0: # Color by triangles
+        color_triangles = np.repeat(color_triangles, 3) # colors argument is by points so repeat for triangle
+        mesh = k3d.mesh(vertices=vertices, indices=indices, colors=color_triangles, side=side, opacity=opacity)
     elif len(colors) == 1:
         colorhex = int(matplotlib.colors.rgb2hex(colors[0])[1:], 16)
         mesh = k3d.mesh(vertices=vertices, indices=indices, side=side, opacity=opacity)
