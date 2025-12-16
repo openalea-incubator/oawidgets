@@ -124,7 +124,7 @@ def scene2mesh(scene, property=None, side='front'):
                         color_range=[min(property), max(property)],
                         side=side, opacity=opacity)
     if len(color_triangles) > 0: # Color by triangles
-        color_triangles = np.repeat(color_triangles, 3) # colors argument is by points so repeat for triangle
+        color_triangles = np.repeat(color_triangles, 3).astype(np.uint32) # colors argument is by points so repeat for triangle
         mesh = k3d.mesh(vertices=vertices, indices=indices, colors=color_triangles, side=side, opacity=opacity)
     elif len(colors) == 1:
         colorhex = int(matplotlib.colors.rgb2hex(colors[0])[1:], 16)
